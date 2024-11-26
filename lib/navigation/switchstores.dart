@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SwitchStoresBottomSheet {
   static void show(BuildContext context) {
@@ -17,9 +18,7 @@ class SwitchStoresBottomSheet {
               // Divider with blink effect
               GestureDetector(
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Divider Tapped!')),
-                  );
+                  Get.snackbar('Divider Tapped !', '');
                 },
                 child: AnimatedContainer(
                   width: 80,
@@ -34,7 +33,7 @@ class SwitchStoresBottomSheet {
                 ),
               ),
               const SizedBox(height: 16),
-              
+
               // Select Your Store text with dividers
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -48,8 +47,9 @@ class SwitchStoresBottomSheet {
                   const Text(
                     'Select Your Store',
                     style: TextStyle(
-                       fontFamily: 'DMSerifDisplay',
-                      color: Colors.pink, fontSize: 18),
+                        fontFamily: 'DMSerifDisplay',
+                        color: Colors.pink,
+                        fontSize: 18),
                   ),
                   const SizedBox(width: 8),
                   Container(
@@ -59,16 +59,14 @@ class SwitchStoresBottomSheet {
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               // Container 1
               GestureDetector(
                 onTap: () {
                   // Add your action here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Toy Store Selected', style: TextStyle( fontFamily: 'DMSerifDisplay',),)),
-                  );
+                  Get.snackbar('Toy Store Selected', '');
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
@@ -80,16 +78,14 @@ class SwitchStoresBottomSheet {
                   ),
                 ),
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               // Container 2
               GestureDetector(
                 onTap: () {
                   // Add your action here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Cosmetic Store Selected', style: TextStyle( fontFamily: 'DMSerifDisplay',),)),
-                  );
+                  Get.snackbar('Cosmetic Store Selected', '');
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),

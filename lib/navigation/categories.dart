@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:homepage/product/products_page.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:homepage/bottomnavigator.dart';
@@ -128,7 +129,9 @@ class CategoriesPageState extends State<CategoriesPage> {
                   ...categories.map((category) {
                     return InkWell(
                       onTap: () {
-                        // Handle category tap
+                        Get.to(() => ProductPage(
+                            title: category['name'],
+                            categories: category['slug']));
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
