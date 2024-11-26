@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:homepage/cart.dart';
 import 'package:homepage/navigation/categories.dart';
 import 'package:homepage/navigation/offer.dart';
 import 'package:homepage/navigation/profile.dart';
 import 'package:homepage/bottomnavigator.dart';
 import 'package:homepage/navigation/switchstores.dart';
 import 'package:homepage/notification.dart';
+import 'package:homepage/product/products_page.dart';
 import 'package:homepage/search.dart';
+import 'package:homepage/widgets_homepage/cetaphil.dart';
+import 'package:homepage/widgets_homepage/lovedbrands.dart';
+import 'package:homepage/widgets_homepage/newarrival.dart';
+import 'package:homepage/widgets_homepage/topbrands.dart';
+import 'package:homepage/wishlist.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -72,6 +80,7 @@ class HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header Section
               SizedBox(
@@ -100,35 +109,95 @@ class HomePageState extends State<HomePage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SearchPage()),
-                                  );
-                                },
-                                child: Icon(Icons.search, color: Colors.black),
-                              ),
-                              const SizedBox(width: 10),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const NotificationPage(),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.pinkAccent, width: 1),
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SearchPage()),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: HexColor('#DD3877'),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                      child: ImageIcon(
+                                        AssetImage('assets/search.png'),
+                                        color: HexColor('#DD3877'),
+                                        size: 30,
+                                      ),
                                     ),
-                                  );
-                                },
-                                child: Icon(Icons.notifications,
-                                    color: Colors.black),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const NotificationPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: ImageIcon(
+                                        AssetImage('assets/bell.png'),
+                                        color: HexColor('#DD3877'),
+                                        size: 30,
+                                      )),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const WishlistPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: ImageIcon(
+                                      AssetImage('assets/heart.png'),
+                                      color: HexColor('#DD3877'),
+                                      size: 30,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const CartPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: ImageIcon(
+                                      AssetImage('assets/cart.png'),
+                                      color: HexColor('#DD3877'),
+                                      size: 30,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ],
@@ -170,13 +239,10 @@ class HomePageState extends State<HomePage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              CategoryDetailsPage(
-                                            categoryId: category['id'],
-                                            categoryName: category['name'],
-                                            categoryImage: category['image'],
-                                          ),
-                                        ),
+                                            builder: (context) => ProductPage(
+                                                title: category['name'] ?? '',
+                                                categories:
+                                                    category['slug'] ?? '')),
                                       );
                                     },
                                     child: _buildCategoryCard(
@@ -191,6 +257,23 @@ class HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+
+              Divider(),
+              Padding(
+                padding: const EdgeInsets.only(left: 26.0, bottom: 8.0),
+                child: Text('Top Brands',
+                    style: const TextStyle(
+                      fontFamily: 'DMSerifDisplay',
+                      color: Color.fromARGB(255, 195, 18, 127),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    )),
+              ),
+              TopBrandsSection(),
+              NewArrivalsSection(),
+              LovedBrandsSection(),
+              NewArrivalsSection(),
+              CetaphilSection(),
             ],
           ),
         ),
@@ -277,40 +360,6 @@ class HomePageState extends State<HomePage> {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CategoryDetailsPage extends StatelessWidget {
-  final String categoryId;
-  final String categoryName;
-  final String categoryImage;
-
-  const CategoryDetailsPage({
-    super.key,
-    required this.categoryId,
-    required this.categoryName,
-    required this.categoryImage,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(categoryName),
-      ),
-      body: Column(
-        children: [
-          Image.network(categoryImage),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              "Details for $categoryName",
-              style: const TextStyle(fontSize: 18),
             ),
           ),
         ],

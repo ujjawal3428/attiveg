@@ -1,14 +1,50 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class LovedBrandsSection extends StatefulWidget {
-  final List<dynamic> brands; // Add brands as a parameter
-  const LovedBrandsSection({super.key, required this.brands});
+  // Add brands as a parameter
+  const LovedBrandsSection({super.key});
 
   @override
   State<LovedBrandsSection> createState() => _LovedBrandsSectionState();
 }
 
 class _LovedBrandsSectionState extends State<LovedBrandsSection> {
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  List<dynamic> brands = [];
+  bool isLoading = true;
+  List<String> images = [];
+
+  Future<void> fetchData() async {
+    const String url =
+        'https://attiveg.com:8443/api/products/brands'; // Replace with your API URL
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print('Total Items: ${data['totalItems']}');
+        print('Data: ${data['data']}');
+        setState(() {
+          images = (data['data'] as List)
+              .map((item) => item['image'] as String)
+              .toList();
+          isLoading = false;
+        });
+        // Use the fetched data as required
+      } else {
+        print('Failed to fetch data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -71,9 +107,9 @@ class _LovedBrandsSectionState extends State<LovedBrandsSection> {
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                 ),
-                itemCount: widget.brands.length,
+                itemCount: images.length,
                 itemBuilder: (context, index) {
-                  final brand = widget.brands[index];
+                  final brand = images[index];
                   return Container(
                     margin: const EdgeInsets.all(1),
                     decoration: BoxDecoration(
@@ -82,7 +118,7 @@ class _LovedBrandsSectionState extends State<LovedBrandsSection> {
                           width: 0.5),
                       borderRadius: BorderRadius.circular(8),
                       image: DecorationImage(
-                        image: NetworkImage(brand['image']),
+                        image: NetworkImage(brand),
                         fit: BoxFit.contain,
                       ),
                     ),
