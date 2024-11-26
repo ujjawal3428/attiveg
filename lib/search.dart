@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homepage/bottomnavigator.dart';
 import 'package:homepage/homepage.dart';
 
@@ -6,7 +7,6 @@ import 'package:homepage/navigation/categories.dart';
 import 'package:homepage/navigation/offer.dart';
 import 'package:homepage/navigation/profile.dart';
 import 'package:homepage/navigation/switchstores.dart';
-
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -17,41 +17,31 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _controller = TextEditingController();
-  int _selectedIndex = 1; 
+  int _selectedIndex = 1;
 
-
-     void _onItemTapped(int index) {
+  void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index; 
+      _selectedIndex = index;
     });
 
     // Use pushReplacement to maintain state and index
     switch (index) {
       case 0:
-        // Navigator.pushReplacement(
-        //     context, MaterialPageRoute(builder: (context) => SwitchStores(onClose: () {  },)));
-        // break;
+        break;
       case 1:
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+        Get.off(() => const HomePage());
         break;
       case 2:
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const OfferPage()));
+        Get.to(() => const OfferPage());
         break;
       case 3:
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const CategoriesPage()));
+        Get.to(() => const CategoriesPage());
         break;
       case 4:
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+        Get.to(() => const ProfilePage());
         break;
     }
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -64,36 +54,34 @@ class _SearchPageState extends State<SearchPage> {
                 height: 80,
                 decoration: BoxDecoration(
                   boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                offset: const Offset(0, 5), 
-                blurRadius: 0.5,
-                spreadRadius: 2,
-              ),
-            ],
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      offset: const Offset(0, 5),
+                      blurRadius: 0.5,
+                      spreadRadius: 2,
+                    ),
+                  ],
                   color: Colors.grey,
-                  
                   image: const DecorationImage(
-                    image: AssetImage('assets/bg1.jpg'), 
+                    image: AssetImage('assets/bg1.jpg'),
                     fit: BoxFit.cover,
                   ),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: Row(
-                  
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
                         child: InkWell(
                           onTap: () {
-                            Navigator.of(context).pop();
+                            Get.back();
                           },
                           child: Image.asset(
-                            'assets/back.png', 
-                            width: 30, 
-                            height: 30,  
+                            'assets/back.png',
+                            width: 30,
+                            height: 30,
                           ),
                         ),
                       ),
@@ -103,28 +91,29 @@ class _SearchPageState extends State<SearchPage> {
                           margin: const EdgeInsets.symmetric(horizontal: 8.0),
                           decoration: BoxDecoration(
                             border: Border.all(
-              color: Colors.grey, 
-              width: 0.3, 
-            ),
-                             boxShadow: [
-              BoxShadow(
-                 color: Colors.black.withOpacity(0.03),
-                    offset: const Offset(0, 7),
-                    blurRadius: 10,
-                    spreadRadius: 10,
-              ),
-            ],
+                              color: Colors.grey,
+                              width: 0.3,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.03),
+                                offset: const Offset(0, 7),
+                                blurRadius: 10,
+                                spreadRadius: 10,
+                              ),
+                            ],
                             borderRadius: BorderRadius.circular(12.0),
                             color: const Color.fromARGB(255, 255, 255, 255),
                           ),
                           child: TextField(
                             controller: _controller,
                             decoration: InputDecoration(
-                            
-                              contentPadding: const EdgeInsets.symmetric(vertical: 9.0),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 9.0),
                               border: InputBorder.none,
                               hintText: 'Search Products Here',
-                              prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                              prefixIcon:
+                                  const Icon(Icons.search, color: Colors.grey),
                               suffixIcon: IconButton(
                                 icon: const Icon(Icons.clear),
                                 onPressed: () {
@@ -142,88 +131,82 @@ class _SearchPageState extends State<SearchPage> {
               const SizedBox(height: 20),
 
               Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Heading Container
-            Container(
-              margin: const EdgeInsets.only(left:25.0, bottom: 20.0),
-              child: const Text(
-                'Trending Searches',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 229, 29, 95),
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'DMSerifDisplay'
-                ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Heading Container
+                  Container(
+                    margin: const EdgeInsets.only(left: 25.0, bottom: 20.0),
+                    child: const Text(
+                      'Trending Searches',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 229, 29, 95),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'DMSerifDisplay'),
+                    ),
+                  ),
+                  // Container holding 6 smaller containers
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildSmallContainer('Container 1'),
+                          _buildSmallContainer('Container 2'),
+                          _buildSmallContainer('Container 3'),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildSmallContainer('Container 4'),
+                          _buildSmallContainer('Container 5'),
+                          _buildSmallContainer('Container 6'),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),
-            // Container holding 6 smaller containers
-            Column(
-              children: [
-               
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildSmallContainer('Container 1'),
-                    _buildSmallContainer('Container 2'),
-                    _buildSmallContainer('Container 3'),
-                  ],
-                ),
-                const SizedBox(height: 10), 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildSmallContainer('Container 4'),
-                    _buildSmallContainer('Container 5'),
-                    _buildSmallContainer('Container 6'),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-        _buildSuggestedItems(),
+              _buildSuggestedItems(),
 
-        
-        //more content here
-      ],
-      
-      ),
-      ),
+              //more content here
+            ],
+          ),
+        ),
         bottomNavigationBar: BottomNavigator(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
-         onSwitchStores: (){
-           SwitchStoresBottomSheet.show(context);
-         },
-      ),
-      ),
-    );
-  }
-
-  }
-
-  // small containers layout
-  Widget _buildSmallContainer(String text) {
-    return Container(
-      width: 92, 
-      height: 38, 
-      decoration: BoxDecoration(
-        color: Colors.grey[100], 
-        borderRadius: BorderRadius.circular(8), 
-      ),
-      child: Center(
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.pink, 
-            fontSize: 12,
-
-          ),
-          ),
+          selectedIndex: _selectedIndex,
+          onItemTapped: _onItemTapped,
+          onSwitchStores: () {
+            SwitchStoresBottomSheet.show(context);
+          },
         ),
+      ),
     );
   }
+}
+
+// small containers layout
+Widget _buildSmallContainer(String text) {
+  return Container(
+    width: 92,
+    height: 38,
+    decoration: BoxDecoration(
+      color: Colors.grey[100],
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Center(
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: Colors.pink,
+          fontSize: 12,
+        ),
+      ),
+    ),
+  );
+}
 
 Widget _buildSuggestedItems() {
   return Padding(
@@ -233,8 +216,6 @@ Widget _buildSuggestedItems() {
           color: Colors.white,
           boxShadow: [BoxShadow(offset: Offset(0, 3), color: Colors.black)]),
       height: 450,
-
-      
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -284,7 +265,6 @@ Widget _buildSuggestedItems() {
   );
 }
 
-
 Widget _buildProductCard() {
   return Container(
     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -315,14 +295,14 @@ Widget _buildProductCard() {
               ),
             ),
             const SizedBox(height: 4),
-           const Padding(
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   Text(
+                  Text(
                     'Product Name',
-                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                   ),
                   Row(
                     children: [
@@ -350,58 +330,60 @@ Widget _buildProductCard() {
               child: Container(
                 width: 134,
                 alignment: Alignment.topLeft,
-                child: Row(
-                  children: [
-                    const Text(
-                      '₹999',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                child: Row(children: [
+                  const Text(
+                    '₹999',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    '₹1089.00',
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontFamily: 'DMSerifDisplay',
+                        fontSize: 7,
+                        decoration: TextDecoration.lineThrough,
+                        decorationThickness: 1.5),
+                  ),
+                  const SizedBox(width: 6),
+                  Container(
+                    height: 14, // Reduced from 16
+                    width: 32, // Reduced from 38
+                    padding: const EdgeInsets.all(1), // Reduced from 2
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4), // Reduced from 6
+                      color: const Color.fromARGB(255, 1, 104, 155),
                     ),
-                    const SizedBox(width: 8),
-                    const Text(
-                      '₹1089.00',
-                      style: TextStyle(color: Colors.grey, fontFamily: 'DMSerifDisplay', fontSize: 7, decoration: TextDecoration.lineThrough, decorationThickness: 1.5),
-                    ),
-                    const SizedBox(width: 6),
-                     Container(
-                      height: 14,  // Reduced from 16
-                      width: 32,   // Reduced from 38
-                      padding: const EdgeInsets.all(1),  // Reduced from 2
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),  // Reduced from 6
-                        color: const Color.fromARGB(255, 1, 104, 155),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '7% OFF',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontFamily: 'DMSerifDisplay',
-                            fontSize: 6,  // Reduced from 7
-                          ),
+                    child: const Center(
+                      child: Text(
+                        '7% OFF',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontFamily: 'DMSerifDisplay',
+                          fontSize: 6, // Reduced from 7
                         ),
                       ),
                     ),
-           ]
+                  ),
+                ]),
               ),
             ),
-            ),
-          
-           Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 8),  // Reduced from 10
+                  padding: const EdgeInsets.only(left: 8), // Reduced from 10
                   child: SizedBox(
-                    height: 25,  // Reduced from 35
-                    width: 25,   // Reduced from 35
+                    height: 25, // Reduced from 35
+                    width: 25, // Reduced from 35
                     child: GestureDetector(
                       onTap: () {
                         // Handle button tap here
                       },
                       child: Image.asset(
                         'assets/heartbutton@4x.png',
-                        width: 24.0,  // Reduced from 30
-                        height: 24.0,  // Reduced from 30
+                        width: 24.0, // Reduced from 30
+                        height: 24.0, // Reduced from 30
                       ),
                     ),
                   ),
@@ -409,8 +391,8 @@ Widget _buildProductCard() {
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: SizedBox(
-                    height: 50,    
-                    width: 109,    
+                    height: 50,
+                    width: 109,
                     child: InkWell(
                       onTap: () {},
                       child: Image.asset(
@@ -423,24 +405,25 @@ Widget _buildProductCard() {
             ),
           ],
         ),
-       Positioned(
+        Positioned(
           top: 0,
           left: 0,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),  // Reduced from 8,4
+            padding: const EdgeInsets.symmetric(
+                horizontal: 6, vertical: 3), // Reduced from 8,4
             decoration: const BoxDecoration(
               color: Colors.pink,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),      // Reduced from 10
-                bottomRight: Radius.circular(8),  // Reduced from 10
+                topLeft: Radius.circular(8), // Reduced from 10
+                bottomRight: Radius.circular(8), // Reduced from 10
               ),
             ),
             child: const Text(
               'New',
               style: TextStyle(
-                color: Colors.white, 
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 10,  // Added smaller font size
+                fontSize: 10, // Added smaller font size
               ),
             ),
           ),
@@ -449,4 +432,3 @@ Widget _buildProductCard() {
     ),
   );
 }
-

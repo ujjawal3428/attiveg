@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:homepage/bottomnavigator.dart';
@@ -54,20 +55,16 @@ class CategoriesPageState extends State<CategoriesPage> {
 
     switch (index) {
       case 1:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+        Get.to(() => const HomePage());
         break;
       case 2:
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const OfferPage()));
+        Get.to(() => const OfferPage());
         break;
       case 3:
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const CategoriesPage()));
+        Get.to(() => const CategoriesPage());
         break;
       case 4:
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ProfilePage()));
+        Get.to(() => const ProfilePage());
         break;
     }
   }
@@ -105,11 +102,7 @@ class CategoriesPageState extends State<CategoriesPage> {
                             padding: const EdgeInsets.only(left: 20),
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const HomePage()),
-                                );
+                                Get.to(() => const HomePage());
                               },
                               child: Image.asset(
                                 'assets/back.png',

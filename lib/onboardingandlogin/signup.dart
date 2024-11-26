@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homepage/homepage.dart';
 import 'package:homepage/onboardingandlogin/emaillogin.dart';
 import 'package:http/http.dart' as http;
@@ -48,8 +49,7 @@ class SignupState extends State<Signup> {
 
       if (response.statusCode == 201) {
         // Success: Navigate to HomePage
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+        Get.to(() => const HomePage());
       } else {
         // Failure: Show error message
         final error =
@@ -70,7 +70,7 @@ class SignupState extends State<Signup> {
         content: Text(message),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Get.back(),
             child: const Text('OK'),
           ),
         ],
@@ -214,11 +214,7 @@ class SignupState extends State<Signup> {
                       SizedBox(height: size.height * 0.05),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Emaillogin()),
-                          );
+                          Get.to(() => const Emaillogin());
                         },
                         child: Text(
                           "Already have an account? Sign in now",

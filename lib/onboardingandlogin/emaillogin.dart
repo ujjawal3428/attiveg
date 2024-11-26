@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homepage/homepage.dart';
-
 import 'package:homepage/onboardingandlogin/signup.dart';
 
 class Emaillogin extends StatelessWidget {
@@ -49,7 +49,7 @@ class Emaillogin extends StatelessWidget {
                       'Explore wide range of\nproducts',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                         fontFamily: 'DMSerifDisplay',
+                        fontFamily: 'DMSerifDisplay',
                         fontSize: isSmallScreen ? 24 : 30,
                         fontWeight: FontWeight.bold,
                       ),
@@ -67,8 +67,8 @@ class Emaillogin extends StatelessWidget {
                         child: Text(
                           'Forgot Password?',
                           style: TextStyle(
-                             fontFamily: 'DMSerifDisplay',
-                            color: Color.fromARGB(255, 255, 123, 123)),
+                              fontFamily: 'DMSerifDisplay',
+                              color: Color.fromARGB(255, 255, 123, 123)),
                         ),
                       ),
                     ),
@@ -78,10 +78,7 @@ class Emaillogin extends StatelessWidget {
                       height: 52,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const HomePage()),
-                          );
+                          Get.to(() => const HomePage());
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.pink,
@@ -89,24 +86,28 @@ class Emaillogin extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 15),
                         ),
-                        child: const Text('Log In',style: TextStyle( fontFamily: 'DMSerifDisplay',),),
+                        child: const Text(
+                          'Log In',
+                          style: TextStyle(
+                            fontFamily: 'DMSerifDisplay',
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(height: size.height * 0.09),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Signup()),
-                        );
+                        Get.to(() => const Signup());
                       },
                       child: Text(
                         "Don't have an account? Sign up now",
                         style: TextStyle(
-                           fontFamily: 'DMSerifDisplay',
-                          color: Colors.pink, fontSize: isSmallScreen ? 16 : 20),
+                            fontFamily: 'DMSerifDisplay',
+                            color: Colors.pink,
+                            fontSize: isSmallScreen ? 16 : 20),
                       ),
                     ),
                   ],
@@ -119,7 +120,8 @@ class Emaillogin extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(BuildContext context, String label, {bool isPassword = false}) {
+  Widget _buildTextField(BuildContext context, String label,
+      {bool isPassword = false}) {
     final size = MediaQuery.of(context).size;
     return SizedBox(
       height: 56,

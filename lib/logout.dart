@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Logout extends StatelessWidget {
   const Logout({super.key});
@@ -15,7 +16,12 @@ class Logout extends StatelessWidget {
               builder: (BuildContext context) => const CancelOrderDialog(),
             );
           },
-          child: const Text('Show Cancel Order', style: TextStyle( fontFamily: 'DMSerifDisplay',),),
+          child: const Text(
+            'Show Cancel Order',
+            style: TextStyle(
+              fontFamily: 'DMSerifDisplay',
+            ),
+          ),
         ),
       ),
     );
@@ -51,7 +57,7 @@ class CancelOrderDialog extends StatelessWidget {
               top: 20,
               child: IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Get.back();
                 },
                 icon: const Icon(Icons.close),
               ),
@@ -67,9 +73,8 @@ class CancelOrderDialog extends StatelessWidget {
                 children: [
                   const SizedBox(height: 20),
 
-                 
                   Image.asset(
-                    'assets/logoutgirl@4x.png', 
+                    'assets/logoutgirl@4x.png',
                     width: 140,
                     height: 174,
                   ),
@@ -80,8 +85,9 @@ class CancelOrderDialog extends StatelessWidget {
                   const Text(
                     'Do you really want to \n Logout?',
                     style: TextStyle(
-                       fontFamily: 'DMSerifDisplay',
-                      fontSize: 24, fontWeight: FontWeight.bold),
+                        fontFamily: 'DMSerifDisplay',
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -104,7 +110,7 @@ class CancelOrderDialog extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.pink.shade200,

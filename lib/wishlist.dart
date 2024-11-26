@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homepage/bottomnavigator.dart';
 import 'package:homepage/homepage.dart';
 
@@ -23,27 +24,21 @@ class _WishlistPageState extends State<WishlistPage> {
       _selectedIndex = index;
     });
 
-   
     switch (index) {
       case 1:
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+        Get.off(() => const HomePage());
         break;
       case 2:
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const OfferPage()));
+        Get.to(() => const OfferPage());
         break;
       case 3:
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const CategoriesPage()));
+        Get.to(() => const CategoriesPage());
         break;
       case 4:
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const ProfilePage()));
+        Get.to(() => const ProfilePage());
         break;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +52,10 @@ class _WishlistPageState extends State<WishlistPage> {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.black.withOpacity(0.03),
-                    offset: const Offset(0, 7),
-                    blurRadius: 10,
-                    spreadRadius: 10,
+                      color: Colors.black.withOpacity(0.03),
+                      offset: const Offset(0, 7),
+                      blurRadius: 10,
+                      spreadRadius: 10,
                     ),
                   ],
                   color: Colors.grey,
@@ -77,7 +72,7 @@ class _WishlistPageState extends State<WishlistPage> {
                         padding: const EdgeInsets.only(left: 20),
                         child: InkWell(
                           onTap: () {
-                            Navigator.of(context).pop();
+                            Get.back();
                           },
                           child: Image.asset(
                             'assets/back.png',
@@ -113,10 +108,10 @@ class _WishlistPageState extends State<WishlistPage> {
         ),
         bottomNavigationBar: BottomNavigator(
           selectedIndex: _selectedIndex,
-          onItemTapped: _onItemTapped, 
-          onSwitchStores: () { 
-             SwitchStoresBottomSheet.show(context);
-           },
+          onItemTapped: _onItemTapped,
+          onSwitchStores: () {
+            SwitchStoresBottomSheet.show(context);
+          },
         ),
       ),
     );
@@ -167,7 +162,8 @@ class WishlistContainer extends StatelessWidget {
                       height: 36,
                       child: Text(
                         'Truderma Absolute Radiance Serum',
-                        style: TextStyle(fontFamily: 'DMSerifDisplay', fontSize: 14),
+                        style: TextStyle(
+                            fontFamily: 'DMSerifDisplay', fontSize: 14),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                       ),
@@ -176,17 +172,23 @@ class WishlistContainer extends StatelessWidget {
                     Container(
                       height: 14,
                       width: 35,
-                      padding: const EdgeInsets.only(left: 4, right: 2, bottom: 2 , top: 2),
+                      padding: const EdgeInsets.only(
+                          left: 4, right: 2, bottom: 2, top: 2),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6),
                         color: Colors.pink.shade50,
                       ),
                       child: const Row(
                         children: [
-                          Icon(size: 9, Icons.star, color: Color.fromARGB(255, 0, 145, 197)),
+                          Icon(
+                              size: 9,
+                              Icons.star,
+                              color: Color.fromARGB(255, 0, 145, 197)),
                           Text(
                             '4.5',
-                            style: TextStyle(color: Color.fromARGB(255, 0, 145, 197), fontSize: 8.4),
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 0, 145, 197),
+                                fontSize: 8.4),
                           ),
                         ],
                       ),
@@ -209,12 +211,22 @@ class WishlistContainer extends StatelessWidget {
                     children: [
                       const Text(
                         '₹999',
-                        style: TextStyle(color: Colors.pink, fontFamily: 'DMSerifDisplay', fontSize: 19),
+                        style: TextStyle(
+                            color: Colors.pink,
+                            fontFamily: 'DMSerifDisplay',
+                            fontSize: 19),
                       ),
                       const SizedBox(width: 10),
                       const Text(
                         '₹1089.00',
-                        style: TextStyle(color: Colors.grey, fontFamily: 'DMSerifDisplay', fontSize: 8.4, decoration: TextDecoration.lineThrough, decorationThickness: 2,  decorationColor: Colors.grey, ),
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontFamily: 'DMSerifDisplay',
+                          fontSize: 8.4,
+                          decoration: TextDecoration.lineThrough,
+                          decorationThickness: 2,
+                          decorationColor: Colors.grey,
+                        ),
                       ),
                       const SizedBox(width: 10),
                       Container(

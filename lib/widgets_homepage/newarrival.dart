@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homepage/productpage.dart';
 
 class NewArrivalsSection extends StatelessWidget {
@@ -85,10 +86,7 @@ Widget _buildProductCard(context) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ProductPage()),
-              ),
+              onTap: () => Get.to(() => const ProductPage()),
               child: Container(
                 height: 165, // Reduced from 239
                 width: 165, // Reduced from 217

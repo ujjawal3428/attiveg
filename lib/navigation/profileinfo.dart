@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfileInfo extends StatelessWidget {
   const ProfileInfo({super.key});
@@ -14,7 +15,7 @@ class ProfileInfo extends StatelessWidget {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
+                    color: Colors.black.withOpacity(0.03),
                     offset: const Offset(0, 7),
                     blurRadius: 10,
                     spreadRadius: 10,
@@ -34,7 +35,7 @@ class ProfileInfo extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 20),
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).pop();
+                          Get.back();
                         },
                         child: Image.asset(
                           'assets/back.png',
@@ -63,35 +64,37 @@ class ProfileInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Name Label and Text Field
-                  Text('Name *', style: TextStyle(
-                     fontFamily: 'DMSerifDisplay',
-                    fontSize: 16)),
+                  Text('Name *',
+                      style: TextStyle(
+                          fontFamily: 'DMSerifDisplay', fontSize: 16)),
                   TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12), // Rounded corners
+                        borderRadius:
+                            BorderRadius.circular(12), // Rounded corners
                       ),
                       hintText: 'Type Here',
                     ),
                   ),
                   SizedBox(height: 16), // Spacer
-                  
+
                   // Phone Number Label and Text Field
-                  Text('Phone Number *', style: TextStyle(
-                     fontFamily: 'DMSerifDisplay',
-                    fontSize: 16)),
+                  Text('Phone Number *',
+                      style: TextStyle(
+                          fontFamily: 'DMSerifDisplay', fontSize: 16)),
                   TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12), // Rounded corners
+                        borderRadius:
+                            BorderRadius.circular(12), // Rounded corners
                       ),
                       hintText: 'Type Here',
                     ),
                     keyboardType: TextInputType.phone,
                   ),
-                  SizedBox(height: 30), 
+                  SizedBox(height: 30),
                   // Spacer
-                  
+
                   // Save Button
                   Center(
                     child: ElevatedButton(
@@ -99,14 +102,21 @@ class ProfileInfo extends StatelessWidget {
                         // Save button action
                       },
                       style: ElevatedButton.styleFrom(
-                       backgroundColor: Colors.pink, // Background color
+                        backgroundColor: Colors.pink, // Background color
                         foregroundColor: Colors.white, // Text color
-                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 12),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12), // Rounded corners
+                          borderRadius:
+                              BorderRadius.circular(12), // Rounded corners
                         ),
                       ),
-                      child: Text('Save', style: TextStyle( fontFamily: 'DMSerifDisplay',),),
+                      child: Text(
+                        'Save',
+                        style: TextStyle(
+                          fontFamily: 'DMSerifDisplay',
+                        ),
+                      ),
                     ),
                   ),
                 ],

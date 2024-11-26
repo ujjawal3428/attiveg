@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OrderDetails extends StatefulWidget {
   const OrderDetails({super.key});
@@ -18,23 +19,23 @@ class _OrderDetailsState extends State<OrderDetails> {
               // Header
               _buildHeader(context),
               const SizedBox(height: 20),
-              
+
               // Order Info
               _buildOrderInfo(),
               const SizedBox(height: 10),
-              
+
               // Shipping Address
               _buildShippingAddress(),
               const SizedBox(height: 10),
-              
+
               // Items to be delivered
               _buildItemsList(),
               const SizedBox(height: 10),
-              
+
               // Bill Summary
               _buildBillSummary(),
               const SizedBox(height: 10),
-              
+
               // Cancel Button
               _buildCancelButton(),
               const SizedBox(height: 15),
@@ -61,7 +62,6 @@ class _OrderDetailsState extends State<OrderDetails> {
         image: DecorationImage(
           image: const AssetImage('assets/bg1.jpg'),
           fit: BoxFit.cover,
-         
         ),
       ),
       child: Padding(
@@ -71,12 +71,12 @@ class _OrderDetailsState extends State<OrderDetails> {
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: InkWell(
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => Get.back(),
                 child: Image.asset(
                   'assets/back.png',
                   width: 30,
                   height: 30,
-                  errorBuilder: (context, error, stackTrace) => 
+                  errorBuilder: (context, error, stackTrace) =>
                       const Icon(Icons.arrow_back, size: 30),
                 ),
               ),

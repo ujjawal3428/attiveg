@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:homepage/cart.dart';
 import 'package:homepage/navigation/categories.dart';
@@ -10,6 +11,7 @@ import 'package:homepage/notification.dart';
 import 'package:homepage/product/products_page.dart';
 import 'package:homepage/search.dart';
 import 'package:homepage/widgets_homepage/cetaphil.dart';
+import 'package:homepage/widgets_homepage/copynewarrival.dart';
 import 'package:homepage/widgets_homepage/lovedbrands.dart';
 import 'package:homepage/widgets_homepage/newarrival.dart';
 import 'package:homepage/widgets_homepage/topbrands.dart';
@@ -66,10 +68,7 @@ class HomePageState extends State<HomePage> {
     };
 
     if (routes.containsKey(index)) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => routes[index]!()),
-      );
+      Get.off(() => routes[index]!());
     }
   }
 
@@ -121,12 +120,7 @@ class HomePageState extends State<HomePage> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SearchPage()),
-                                      );
+                                      Get.to(() => const SearchPage());
                                     },
                                     child: Container(
                                       width: 35,
@@ -148,13 +142,7 @@ class HomePageState extends State<HomePage> {
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const NotificationPage(),
-                                          ),
-                                        );
+                                        Get.to(() => const NotificationPage());
                                       },
                                       child: ImageIcon(
                                         AssetImage('assets/bell.png'),
@@ -164,13 +152,7 @@ class HomePageState extends State<HomePage> {
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const WishlistPage(),
-                                        ),
-                                      );
+                                      Get.to(() => const WishlistPage());
                                     },
                                     child: ImageIcon(
                                       AssetImage('assets/heart.png'),
@@ -181,13 +163,7 @@ class HomePageState extends State<HomePage> {
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const CartPage(),
-                                        ),
-                                      );
+                                      Get.to(() => const CartPage());
                                     },
                                     child: ImageIcon(
                                       AssetImage('assets/cart.png'),
@@ -236,13 +212,10 @@ class HomePageState extends State<HomePage> {
                                   final category = categories[index];
                                   return GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ProductPage(
-                                                title: category['name'] ?? '',
-                                                categories:
-                                                    category['slug'] ?? '')),
+                                      Get.to(
+                                        () => ProductPage(
+                                            title: category['name'] ?? '',
+                                            categories: category['slug'] ?? ''),
                                       );
                                     },
                                     child: _buildCategoryCard(
@@ -272,7 +245,7 @@ class HomePageState extends State<HomePage> {
               TopBrandsSection(),
               NewArrivalsSection(),
               LovedBrandsSection(),
-              NewArrivalsSection(),
+              CopyNewArrivalSection(),
               CetaphilSection(),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homepage/onboardingandlogin/loginpage.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -95,10 +96,7 @@ class OnboardingPageState extends State<OnboardingPage> {
                     foregroundColor: Colors.white, // Text color
                   ),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()));
+                    Get.to(() => const LoginPage());
                   },
                   child: const Text("Get Started",
                       style: TextStyle(

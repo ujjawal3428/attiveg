@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:homepage/orderdetails.dart';
-
 
 class MyOrders extends StatelessWidget {
   const MyOrders({super.key});
@@ -38,10 +38,10 @@ class MyOrders extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.03),
-                    offset: const Offset(0, 7),
-                    blurRadius: 10,
-                    spreadRadius: 10,
+            color: Colors.black.withOpacity(0.03),
+            offset: const Offset(0, 7),
+            blurRadius: 10,
+            spreadRadius: 10,
           ),
         ],
         color: Colors.grey,
@@ -55,7 +55,7 @@ class MyOrders extends StatelessWidget {
         child: Row(
           children: [
             InkWell(
-              onTap: () => Navigator.of(context).pop(),
+              onTap: () => Get.back(),
               child: Image.asset(
                 'assets/back.png',
                 width: 30,
@@ -127,7 +127,8 @@ class MyOrders extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderCard(BuildContext context) { // Added BuildContext parameter
+  Widget _buildOrderCard(BuildContext context) {
+    // Added BuildContext parameter
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -166,21 +167,21 @@ class MyOrders extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      
                     ],
                   ),
                 ],
-                
               ),
-                SizedBox(width: 10,),
-                       Container(
-      height: 28,
-      width: 1,
-      color: Colors.grey, 
-    ),
-    SizedBox(width: 10,),
-             
-              
+              SizedBox(
+                width: 10,
+              ),
+              Container(
+                height: 28,
+                width: 1,
+                color: Colors.grey,
+              ),
+              SizedBox(
+                width: 10,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -204,24 +205,29 @@ class MyOrders extends StatelessWidget {
               ),
             ],
           ),
-           const SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text('Items Ordered', style: TextStyle(fontFamily: 'DMSerifDisplay',),),
-            SizedBox(width: 2), 
-            Container(
-              width: 5,
-              height: 5,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                shape: BoxShape.circle,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Items Ordered',
+                style: TextStyle(
+                  fontFamily: 'DMSerifDisplay',
+                ),
               ),
-            ),
-            SizedBox(width:2), 
-            Text('3 Items'),
-          ],
-        ),
+              SizedBox(width: 2),
+              Container(
+                width: 5,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              SizedBox(width: 2),
+              Text('3 Items'),
+            ],
+          ),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -234,23 +240,24 @@ class MyOrders extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           ElevatedButton(
-  onPressed: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const OrderDetails()),
-    );
-  },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.white,
-    foregroundColor: Colors.black,
-    minimumSize: const Size(double.infinity, 40),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8), 
-    ),
-  ),
-  child: const Text('Order Details', style: TextStyle(fontFamily: 'DMSerifDisplay',),),
-),
-
+            onPressed: () {
+              Get.to(() => const OrderDetails());
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              minimumSize: const Size(double.infinity, 40),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Text(
+              'Order Details',
+              style: TextStyle(
+                fontFamily: 'DMSerifDisplay',
+              ),
+            ),
+          ),
         ],
       ),
     );

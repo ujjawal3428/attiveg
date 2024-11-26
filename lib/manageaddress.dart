@@ -1,6 +1,6 @@
 // main.dart
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 
 class Manageaddress extends StatelessWidget {
   const Manageaddress({super.key});
@@ -16,7 +16,7 @@ class Manageaddress extends StatelessWidget {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                     color: Colors.black.withOpacity(0.03),
+                    color: Colors.black.withOpacity(0.03),
                     offset: const Offset(0, 7),
                     blurRadius: 10,
                     spreadRadius: 10,
@@ -36,7 +36,7 @@ class Manageaddress extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 20),
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).pop();
+                          Get.back();
                         },
                         child: Image.asset(
                           'assets/back.png',
@@ -105,26 +105,34 @@ class Manageaddress extends StatelessWidget {
                           children: [
                             Text(
                               'A 204, Gardenea Heights Kanakia Road, A…',
-                              style: TextStyle(fontSize: 14,
-                              fontFamily: 'DMSerifDisplay',),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'DMSerifDisplay',
+                              ),
                             ),
                             SizedBox(height: 4),
                             Text(
                               'Mira Road - East',
-                              style: TextStyle(fontSize: 14,
-                              fontFamily: 'DMSerifDisplay',),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'DMSerifDisplay',
+                              ),
                             ),
                             SizedBox(height: 4),
                             Text(
                               'Thane, Maharashtra - 401107',
-                              style: TextStyle(fontSize: 14,
-                              fontFamily: 'DMSerifDisplay',),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'DMSerifDisplay',
+                              ),
                             ),
                             SizedBox(height: 4),
                             Text(
                               'Mob : +91 543672993',
-                              style: TextStyle(fontSize: 14,
-                              fontFamily: 'DMSerifDisplay',),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'DMSerifDisplay',
+                              ),
                             ),
                           ],
                         ),

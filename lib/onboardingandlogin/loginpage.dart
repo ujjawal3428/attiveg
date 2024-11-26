@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'emaillogin.dart';
 
 class LoginPage extends StatelessWidget {
@@ -8,7 +9,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isSmallScreen = size.width < 600;
-    
+
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -23,7 +24,7 @@ class LoginPage extends StatelessWidget {
               top: 0,
               left: 0,
               child: Image.asset(
-                width: size.width * 0.8, 
+                width: size.width * 0.8,
                 'assets/makeupkit.png',
                 fit: BoxFit.contain,
               ),
@@ -31,7 +32,7 @@ class LoginPage extends StatelessWidget {
             SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: size.height * 0.17, 
+                  top: size.height * 0.17,
                   left: size.width * 0.05,
                   right: size.width * 0.05,
                 ),
@@ -48,7 +49,7 @@ class LoginPage extends StatelessWidget {
                       'Explore wide range of\nproducts',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                         fontFamily: 'DMSerifDisplay',
+                        fontFamily: 'DMSerifDisplay',
                         fontSize: isSmallScreen ? 24 : 30,
                         fontWeight: FontWeight.bold,
                       ),
@@ -57,24 +58,28 @@ class LoginPage extends StatelessWidget {
                     _buildButton(
                       context,
                       'assets/continuewithemailorcontact.png',
-                      () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Emaillogin())),
+                      () => Get.to(() => const Emaillogin()),
                     ),
                     SizedBox(height: size.height * 0.04),
                     _buildDivider(),
                     SizedBox(height: size.height * 0.04),
-                    _buildButton(context, 'assets/continuewithgoogle.png', () {}),
+                    _buildButton(
+                        context, 'assets/continuewithgoogle.png', () {}),
                     SizedBox(height: size.height * 0.015),
-                    _buildButton(context, 'assets/continuewithfacebook.png', () {}),
+                    _buildButton(
+                        context, 'assets/continuewithfacebook.png', () {}),
                     SizedBox(height: size.height * 0.015),
-                    _buildButton(context, 'assets/continuewithapple.png', () {}),
+                    _buildButton(
+                        context, 'assets/continuewithapple.png', () {}),
                     SizedBox(height: size.height * 0.09),
                     TextButton(
                       onPressed: () {},
                       child: Text(
                         'Do not have an account? Sign up now',
                         style: TextStyle(
-                           fontFamily: 'DMSerifDisplay',
-                          color: Colors.pink, fontSize: isSmallScreen ? 10 : 12),
+                            fontFamily: 'DMSerifDisplay',
+                            color: Colors.pink,
+                            fontSize: isSmallScreen ? 10 : 12),
                       ),
                     ),
                   ],
@@ -87,7 +92,8 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildButton(BuildContext context, String assetName, VoidCallback onTap) {
+  Widget _buildButton(
+      BuildContext context, String assetName, VoidCallback onTap) {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: onTap,
@@ -105,9 +111,9 @@ class LoginPage extends StatelessWidget {
         Expanded(child: Divider(thickness: 1, color: Colors.black)),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text('or login with', style: TextStyle(
-             fontFamily: 'DMSerifDisplay',
-            color: Colors.black)),
+          child: Text('or login with',
+              style:
+                  TextStyle(fontFamily: 'DMSerifDisplay', color: Colors.black)),
         ),
         Expanded(child: Divider(thickness: 1, color: Colors.black)),
       ],
