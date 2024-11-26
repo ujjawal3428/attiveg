@@ -1,0 +1,110 @@
+name: homepage 
+description: "A new Flutter project." 
+ 
+publish_to: "none" 
+version: 1.0.0+1 
+ 
+environment: 
+  sdk: ">=3.4.0 <4.0.0" 
+ 
+dependencies: 
+  flutter: 
+    sdk: flutter 
+  flutter_svg: ^2.0.10+1 
+  provider: ^6.1.2 
+  firebase_auth: ^5.3.1 
+  firebase_core: ^3.6.0 
+  flutter_native_splash: ^2.4.1 
+  http: ^1.2.2
+  modal_progress_hud_nsn: ^0.5.1
+ 
+  cupertino_icons: ^1.0.6 
+ 
+dev_dependencies: 
+  flutter_test: 
+    sdk: flutter 
+ 
+  flutter_lints: ^5.0.0 
+ 
+flutter: 
+  uses-material-design: true 
+ 
+  assets: 
+    - assets/bgsecond.svg 
+    - assets/haircare.svg 
+    - assets/image.svg 
+    - assets/skincare.svg 
+    - assets/vitamin.svg 
+    - assets/bg1.jpg 
+    - assets/bg2.jpg 
+    - assets/haircare.png 
+    - assets/jhanvi.png 
+    - assets/medicine.png 
+    - assets/medicinebg.png 
+    - assets/skincare.png 
+    - assets/vitamin.jpg 
+    - assets/cipla.png 
+    - assets/sun.png 
+    - assets/glenmark.png 
+    - assets/galderma.png 
+    - assets/abbot.png 
+    - assets/biotique.png 
+    - assets/newarrivalbg.png 
+    - assets/citaphil.png 
+    - assets/bell.png 
+    - assets/cart.png 
+    - assets/heart.png 
+    - assets/search.png 
+    - assets/star.png 
+    - assets/attiveg@4x.png
+    - assets/Attiveg@2x.png  
+    - assets/gift.png 
+    - assets/back.png 
+    - assets/notibell@4x.png 
+    - assets/addtocartbutton.png 
+    - assets/heartbutton@4x.png 
+    - assets/productheart.png
+    - assets/productshare.png
+    - assets/onboarding.png
+    - assets/attiveg2.png
+    - assets/gradient.png
+    - assets/makeupkit.png
+    - assets/continuewithgoogle.png
+    - assets/continuewithapple.png
+    - assets/continuewithfacebook.png
+    - assets/continuewithemailorcontact.png
+    - assets/coupan@4x.png
+    - assets/copy@4x.png
+    - assets/cetaphilproduct@4x.png
+    - assets/toy@2x.png
+    - assets/cosmeticstore@2x.png
+    - assets/profilemail@2x.png
+    - assets/profilecall@2x.png
+    - assets/upright@2x.png
+    - assets/rupees@2x.png
+    - assets/profilelocation@2x.png
+    - assets/profilehelp@2x.png
+    - assets/logout@2x.png
+    - assets/sunscreens@4x.png
+    - assets/avatargift@4x.png
+    - assets/avatarbike@4x.png
+    - assets/avatarcheck@4x.png
+    - assets/trackyourpackage@4x.png
+    - assets/cancelorderrupee@4x.png
+    - assets/gradient@4x.png
+    - assets/logoutgirl@4x.png
+    - assets/orderbox@4x.png
+    - assets/sunscreens@4x.png
+    - assets/doctor.jpeg
+    - assets/addtobag@4x.png
+ 
+ 
+ 
+fonts: 
+    - family: DMSerifDisplay 
+      fonts: 
+    - asset: assets/fonts/DMSerifDisplay-Regular.ttf
+
+    - family: PlusJakartaSans
+      fonts:
+    - asset: assets/fonts/PlusJakartaSans-Regular.ttf      
