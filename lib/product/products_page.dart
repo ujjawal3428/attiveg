@@ -68,69 +68,154 @@ class ProductPageState extends State<ProductPage> {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
                         childAspectRatio: 0.8,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        mainAxisExtent: 300),
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 8,
+                        mainAxisExtent: 160),
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       final item = items[index];
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: Card(
+                          color: Colors.white,
                           elevation: 4,
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  item['images'][0]['small'],
-                                  height: 100,
-                                  width: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                          child: Row(
+                            children: [
+                              Image.network(
+                                item['images'][0]['small'],
+                                height: 121,
+                                width: 133,
+                                fit: BoxFit.fill,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 3),
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SizedBox(
-                                        width: 200,
-                                        child: Text(
-                                          item['name'],
-                                          textAlign: TextAlign.start,
+                                      padding: const EdgeInsets.only(
+                                        top: 20,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 140,
+                                            child: Text(
+                                              item['name'],
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 0,
+                                            right: 0,
+                                            left: 0,
+                                          
+                                            child: Container(
+                                              height: 14,
+                                              width: 35,
+                                              padding: const EdgeInsets.only(
+                                                  left: 4,
+                                                  right: 2,
+                                                  bottom: 2,
+                                                  top: 2),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                                color: Colors.pink.shade50,
+                                              ),
+                                              child: const Row(
+                                                children: [
+                                                  Icon(
+                                                      size: 9,
+                                                      Icons.star,
+                                                      color: Color.fromARGB(
+                                                          255, 0, 145, 197)),
+                                                  Text(
+                                                    '4.5',
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 0, 145, 197),
+                                                        fontSize: 8.4),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "₹${item['newPrice']}",
                                           style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold),
+                                              fontFamily: 'DMSerifDisplay',
+                                              fontSize: 19,
+                                              color: Colors.pink),
                                         ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "₹${item['newPrice']}",
-                                      style: TextStyle(color: Colors.pink),
-                                    ),
-                                    Text(
-                                      "₹${item['oldPrice']}",
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        decorationColor: Colors.grey,
-                                        decorationThickness: 1,
-                                        decoration: TextDecoration.lineThrough,
-                                      ),
-                                    ),
-                                    const Divider(),
-                                    ElevatedButton(
-                                        onPressed: () {},
-                                        child: Text(
-                                          'Add to Cart',
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "₹${item['oldPrice']}",
                                           style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 10),
-                                        )),
+                                            color: Colors.grey,
+                                            fontSize: 10.4,
+                                            decorationColor: Colors.grey,
+                                            decorationThickness: 2,
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Container(
+                                          height: 16,
+                                          width: 38,
+                                          padding: const EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            color: const Color.fromARGB(
+                                                255, 1, 104, 155),
+                                          ),
+                                          child: Center(
+                                            child: const Text(
+                                              '7% OFF',
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255),
+                                                fontFamily: 'DMSerifDisplay',
+                                                fontSize: 7,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Image.asset(
+                                        'assets/addtocartbutton.png',
+                                        height: 33,
+                                        width: 166,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       );
