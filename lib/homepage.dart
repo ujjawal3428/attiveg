@@ -8,7 +8,7 @@ import 'package:homepage/navigation/profile.dart';
 import 'package:homepage/bottomnavigator.dart';
 import 'package:homepage/navigation/switchstores.dart';
 import 'package:homepage/notification.dart';
-import 'package:homepage/product/products_page.dart';
+import 'package:homepage/product/products_search_page.dart';
 import 'package:homepage/search.dart';
 import 'package:homepage/widgets_homepage/cetaphil.dart';
 import 'package:homepage/widgets_homepage/copynewarrival.dart';
@@ -213,7 +213,7 @@ class HomePageState extends State<HomePage> {
                                   return GestureDetector(
                                     onTap: () {
                                       Get.to(
-                                        () => ProductPage(
+                                        () => ProductSearchPage(
                                             title: category['name'] ?? '',
                                             categories: category['slug'] ?? ''),
                                       );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:homepage/product/products_page.dart';
+import 'package:homepage/product/products_search_page.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:homepage/bottomnavigator.dart';
@@ -129,7 +129,7 @@ class CategoriesPageState extends State<CategoriesPage> {
                   ...categories.map((category) {
                     return InkWell(
                       onTap: () {
-                        Get.to(() => ProductPage(
+                        Get.to(() => ProductSearchPage(
                             title: category['name'],
                             categories: category['slug']));
                       },

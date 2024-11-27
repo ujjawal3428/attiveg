@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'dart:convert'; // For JSON decoding
 import 'package:http/http.dart' as http;
 
-class ProductPage extends StatefulWidget {
+class ProductSearchPage extends StatefulWidget {
   final String title;
   final String categories;
-  const ProductPage({super.key, required this.title, required this.categories});
+  const ProductSearchPage(
+      {super.key, required this.title, required this.categories});
 
   @override
-  ProductPageState createState() => ProductPageState();
+  ProductSearchPageState createState() => ProductSearchPageState();
 }
 
-class ProductPageState extends State<ProductPage> {
+class ProductSearchPageState extends State<ProductSearchPage> {
   int currentPage = 1;
   int totalItems = 0;
   int itemsPerPage = 10; // Adjust as per API
@@ -127,19 +128,24 @@ class ProductPageState extends State<ProductPage> {
                                                     BorderRadius.circular(6),
                                                 color: Colors.pink.shade50,
                                               ),
-                                              child: const Row(
+                                              child: Row(
                                                 children: [
                                                   Icon(
                                                       size: 9,
                                                       Icons.star,
                                                       color: Color.fromARGB(
                                                           255, 0, 145, 197)),
-                                                  Text(
-                                                    '4.5',
-                                                    style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 0, 145, 197),
-                                                        fontSize: 8.4),
+                                                  Center(
+                                                    child: Text(
+                                                      '${item['ratingsvalue']}' ==
+                                                              'null'
+                                                          ? '0'
+                                                          : '${item['ratingsvalue']}',
+                                                      style: TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 0, 145, 197),
+                                                          fontSize: 8.4),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
