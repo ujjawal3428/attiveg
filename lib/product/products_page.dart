@@ -14,7 +14,7 @@ class ProductPage extends StatefulWidget {
 class ProductPageState extends State<ProductPage> {
   int currentPage = 1;
   int totalItems = 0;
-  int itemsPerPage = 12; // Adjust as per API
+  int itemsPerPage = 10; // Adjust as per API
   List<dynamic> items = [];
 
   bool isLoading = false;
@@ -70,7 +70,7 @@ class ProductPageState extends State<ProductPage> {
                         childAspectRatio: 0.8,
                         crossAxisSpacing: 5,
                         mainAxisSpacing: 8,
-                        mainAxisExtent: 160),
+                        mainAxisExtent: 175),
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       final item = items[index];
@@ -84,7 +84,7 @@ class ProductPageState extends State<ProductPage> {
                               Image.network(
                                 item['images'][0]['small'],
                                 height: 121,
-                                width: 133,
+                                width: 140,
                                 fit: BoxFit.fill,
                               ),
                               Padding(
@@ -99,7 +99,7 @@ class ProductPageState extends State<ProductPage> {
                                       child: Row(
                                         children: [
                                           SizedBox(
-                                            width: 140,
+                                            width: 160,
                                             child: Text(
                                               item['name'],
                                               maxLines: 3,
@@ -114,7 +114,6 @@ class ProductPageState extends State<ProductPage> {
                                             top: 0,
                                             right: 0,
                                             left: 0,
-                                          
                                             child: Container(
                                               height: 14,
                                               width: 35,
@@ -178,7 +177,7 @@ class ProductPageState extends State<ProductPage> {
                                         const SizedBox(width: 10),
                                         Container(
                                           height: 16,
-                                          width: 38,
+                                          width: 40,
                                           padding: const EdgeInsets.all(2),
                                           decoration: BoxDecoration(
                                             borderRadius:
@@ -187,8 +186,8 @@ class ProductPageState extends State<ProductPage> {
                                                 255, 1, 104, 155),
                                           ),
                                           child: Center(
-                                            child: const Text(
-                                              '7% OFF',
+                                            child: Text(
+                                              '${item['discount'].toInt()}% OFF',
                                               style: TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 255, 255, 255),
