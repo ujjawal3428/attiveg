@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:homepage/product/product_models.dart';
 import 'package:homepage/product/productpage.dart';
 
-class NewArrivalsSection extends StatelessWidget {
-  const NewArrivalsSection({super.key});
+class RelatedProducts extends StatelessWidget {
+  final List<RelatedProduct> relatedProducts;
+
+  const RelatedProducts({super.key, required this.relatedProducts});
 
   @override
   Widget build(BuildContext context) {
@@ -27,27 +30,11 @@ class NewArrivalsSection extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'New Arrivals',
+                    'Related Products',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(225, 255, 239, 239),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: SizedBox(
-                      height: 40,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'View All',
-                          style: TextStyle(color: Colors.white, fontSize: 17),
-                        ),
-                      ),
                     ),
                   ),
                 ],

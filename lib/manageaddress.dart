@@ -1,9 +1,28 @@
 // main.dart
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class Manageaddress extends StatelessWidget {
-  const Manageaddress({super.key});
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Address Manager',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+        fontFamily: 'DMSerifDisplay',
+      ),
+      home: const Ordertracker(),
+    );
+  }
+}
+
+class Ordertracker extends StatelessWidget {
+  const Ordertracker({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +35,10 @@ class Manageaddress extends StatelessWidget {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.03),
-                    offset: const Offset(0, 7),
-                    blurRadius: 10,
-                    spreadRadius: 10,
+                    color: Colors.black.withOpacity(0.1),
+                    offset: const Offset(0, 5),
+                    blurRadius: 0.5,
+                    spreadRadius: 2,
                   ),
                 ],
                 color: Colors.grey,
@@ -36,7 +55,7 @@ class Manageaddress extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 20),
                       child: InkWell(
                         onTap: () {
-                          Get.back();
+                          Navigator.of(context).pop();
                         },
                         child: Image.asset(
                           'assets/back.png',
@@ -81,7 +100,6 @@ class Manageaddress extends StatelessWidget {
                               child: Text(
                                 'MYCOT INFOTECH PRIVATE LIMITED',
                                 style: TextStyle(
-                                  fontFamily: 'DMSerifDisplay',
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                 ),
@@ -105,34 +123,22 @@ class Manageaddress extends StatelessWidget {
                           children: [
                             Text(
                               'A 204, Gardenea Heights Kanakia Road, A…',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'DMSerifDisplay',
-                              ),
+                              style: TextStyle(fontSize: 14),
                             ),
                             SizedBox(height: 4),
                             Text(
                               'Mira Road - East',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'DMSerifDisplay',
-                              ),
+                              style: TextStyle(fontSize: 14),
                             ),
                             SizedBox(height: 4),
                             Text(
                               'Thane, Maharashtra - 401107',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'DMSerifDisplay',
-                              ),
+                              style: TextStyle(fontSize: 14),
                             ),
                             SizedBox(height: 4),
                             Text(
                               'Mob : +91 543672993',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'DMSerifDisplay',
-                              ),
+                              style: TextStyle(fontSize: 14),
                             ),
                           ],
                         ),
@@ -155,7 +161,6 @@ class Manageaddress extends StatelessWidget {
                           const Text(
                             'Add New Address',
                             style: TextStyle(
-                              fontFamily: 'DMSerifDisplay',
                               color: Colors.pink,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,

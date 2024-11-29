@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:homepage/productpage.dart';
+import 'package:homepage/product/productpage.dart';
 
 class CopyNewArrivalSection extends StatelessWidget {
   const CopyNewArrivalSection({super.key});
@@ -87,7 +87,7 @@ Widget _buildProductCard(context) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              onTap: () => Get.to(() => const ProductPage()),
+              onTap: () => Get.to(() => const ProductPage(id: 11)),
               child: Container(
                 height: 165, // Reduced from 239
                 width: 165, // Reduced from 217

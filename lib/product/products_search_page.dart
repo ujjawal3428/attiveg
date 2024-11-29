@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:homepage/product/productpage.dart';
 import 'dart:convert'; // For JSON decoding
 import 'package:http/http.dart' as http;
 
@@ -77,150 +79,162 @@ class ProductSearchPageState extends State<ProductSearchPage> {
                       final item = items[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Card(
-                          color: Colors.white,
-                          elevation: 4,
-                          child: Row(
-                            children: [
-                              Image.network(
-                                item['images'][0]['small'],
-                                height: 121,
-                                width: 140,
-                                fit: BoxFit.fill,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 3),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                        top: 20,
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(() => ProductPage(id: item['id']));
+                            print(item['id']);
+                          },
+                          child: Card(
+                            color: Colors.white,
+                            elevation: 4,
+                            child: Row(
+                              children: [
+                                Image.network(
+                                  item['images'][0]['small'],
+                                  height: 121,
+                                  width: 140,
+                                  fit: BoxFit.fill,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 3),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 20,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 160,
+                                              child: Text(
+                                                item['name'],
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 0,
+                                              right: 0,
+                                              left: 0,
+                                              child: Container(
+                                                height: 14,
+                                                width: 35,
+                                                padding: const EdgeInsets.only(
+                                                    left: 4,
+                                                    right: 2,
+                                                    bottom: 2,
+                                                    top: 2),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                  color: Colors.pink.shade50,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                        size: 9,
+                                                        Icons.star,
+                                                        color: Color.fromARGB(
+                                                            255, 0, 145, 197)),
+                                                    Center(
+                                                      child: Text(
+                                                        '${item['ratingsvalue']}' ==
+                                                                'null'
+                                                            ? '0'
+                                                            : '${item['ratingsvalue']}',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    0,
+                                                                    145,
+                                                                    197),
+                                                            fontSize: 8.4),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      child: Row(
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Row(
                                         children: [
+                                          Text(
+                                            "₹${item['newPrice']}",
+                                            style: TextStyle(
+                                                fontFamily: 'DMSerifDisplay',
+                                                fontSize: 19,
+                                                color: Colors.pink),
+                                          ),
                                           SizedBox(
-                                            width: 160,
-                                            child: Text(
-                                              item['name'],
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold),
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            "₹${item['oldPrice']}",
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 10.4,
+                                              decorationColor: Colors.grey,
+                                              decorationThickness: 2,
+                                              decoration:
+                                                  TextDecoration.lineThrough,
                                             ),
                                           ),
-                                          Positioned(
-                                            top: 0,
-                                            right: 0,
-                                            left: 0,
-                                            child: Container(
-                                              height: 14,
-                                              width: 35,
-                                              padding: const EdgeInsets.only(
-                                                  left: 4,
-                                                  right: 2,
-                                                  bottom: 2,
-                                                  top: 2),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
-                                                color: Colors.pink.shade50,
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  Icon(
-                                                      size: 9,
-                                                      Icons.star,
-                                                      color: Color.fromARGB(
-                                                          255, 0, 145, 197)),
-                                                  Center(
-                                                    child: Text(
-                                                      '${item['ratingsvalue']}' ==
-                                                              'null'
-                                                          ? '0'
-                                                          : '${item['ratingsvalue']}',
-                                                      style: TextStyle(
-                                                          color: Color.fromARGB(
-                                                              255, 0, 145, 197),
-                                                          fontSize: 8.4),
-                                                    ),
-                                                  ),
-                                                ],
+                                          const SizedBox(width: 10),
+                                          Container(
+                                            height: 16,
+                                            width: 40,
+                                            padding: const EdgeInsets.all(2),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                              color: const Color.fromARGB(
+                                                  255, 1, 104, 155),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                '${item['discount'].toInt()}% OFF',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255),
+                                                  fontFamily: 'DMSerifDisplay',
+                                                  fontSize: 7,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 2,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "₹${item['newPrice']}",
-                                          style: TextStyle(
-                                              fontFamily: 'DMSerifDisplay',
-                                              fontSize: 19,
-                                              color: Colors.pink),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "₹${item['oldPrice']}",
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 10.4,
-                                            decorationColor: Colors.grey,
-                                            decorationThickness: 2,
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Container(
-                                          height: 16,
-                                          width: 40,
-                                          padding: const EdgeInsets.all(2),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(6),
-                                            color: const Color.fromARGB(
-                                                255, 1, 104, 155),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              '${item['discount'].toInt()}% OFF',
-                                              style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 255, 255, 255),
-                                                fontFamily: 'DMSerifDisplay',
-                                                fontSize: 7,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: Image.asset(
-                                        'assets/addtocartbutton.png',
-                                        height: 33,
-                                        width: 166,
-                                        fit: BoxFit.fill,
+                                      SizedBox(
+                                        height: 5,
                                       ),
-                                    ),
-                                  ],
+                                      GestureDetector(
+                                        onTap: () {},
+                                        child: Image.asset(
+                                          'assets/addtocartbutton.png',
+                                          height: 33,
+                                          width: 166,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );
