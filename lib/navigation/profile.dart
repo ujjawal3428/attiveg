@@ -312,7 +312,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 )),
                 InkWell(
                   onTap: () {
-                    Get.to(() => const Manageaddress());
+                    Get.to(() => const ManageAddress());
                   },
                   child: Image.asset(
                     'assets/upright@2x.png',

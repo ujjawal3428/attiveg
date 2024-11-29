@@ -1,28 +1,8 @@
 // main.dart
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Address Manager',
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-        fontFamily: 'DMSerifDisplay',
-      ),
-      home: const Ordertracker(),
-    );
-  }
-}
-
-class Ordertracker extends StatelessWidget {
-  const Ordertracker({super.key});
+class ManageAddress extends StatelessWidget {
+  const ManageAddress({super.key});
 
   @override
   Widget build(BuildContext context) {
