@@ -47,9 +47,9 @@ class SignupState extends State<Signup> {
         body: jsonEncode(payload),
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         // Success: Navigate to HomePage
-        Get.to(() => const HomePage());
+        Get.offAll(() => const HomePage());
       } else {
         // Failure: Show error message
         final error =

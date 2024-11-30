@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:homepage/onboardingandlogin/onboarding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Logout extends StatelessWidget {
   const Logout({super.key});
@@ -30,6 +32,12 @@ class Logout extends StatelessWidget {
 
 class CancelOrderDialog extends StatelessWidget {
   const CancelOrderDialog({super.key});
+
+  Future<void> logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    Get.offAll(() => const OnboardingPage());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +112,7 @@ class CancelOrderDialog extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      // Handle "Logout" action
+                      logout();
                     },
                     child: const Text('Logout'),
                   ),

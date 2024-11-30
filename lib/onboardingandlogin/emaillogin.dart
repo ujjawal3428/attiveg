@@ -1,10 +1,127 @@
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:homepage/homepage.dart';
 import 'package:homepage/onboardingandlogin/signup.dart';
 
-class Emaillogin extends StatelessWidget {
+class Emaillogin extends StatefulWidget {
   const Emaillogin({super.key});
+
+  @override
+  State<Emaillogin> createState() => _EmailloginState();
+}
+
+class _EmailloginState extends State<Emaillogin> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Dispose the controllers to free resources when the widget is removed
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> loginUser() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final String emailOrMobile = emailController.text.trim();
+    final String password = passwordController.text.trim();
+
+    // Determine if the input is a mobile number
+    final bool isMobileNumber = RegExp(r'^\d{10}$').hasMatch(emailOrMobile);
+    print(isMobileNumber);
+    // Validate input
+    if (emailOrMobile.isEmpty) {
+      Get.snackbar(
+        "Error",
+        "Email/Mobile field cannot be empty.",
+      );
+      return;
+    }
+
+    if (isMobileNumber) {
+      // Mobile number validation
+      if (!RegExp(r'^\d{10}$').hasMatch(emailOrMobile)) {
+        Get.snackbar(
+          "Error",
+          "Please enter a valid 10-digit mobile number.",
+        );
+        return;
+      }
+    } else {
+      // Email and password validation
+      if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(emailOrMobile)) {
+        Get.snackbar(
+          "Error",
+          "Please enter a valid email address.",
+        );
+        return;
+      }
+      if (password.isEmpty) {
+        Get.snackbar(
+          "Error",
+          "Password field cannot be empty.",
+        );
+        return;
+      }
+    }
+
+    // Use different API endpoints based on input type
+    final String apiUrl = isMobileNumber
+        ? "https://attiveg.com:8443/api/login/send-otp" // API for mobile number login
+        : "https://attiveg.com:8443/api/login/password"; // API for email and password login
+
+    try {
+      final Map<String, dynamic> requestBody = isMobileNumber
+          ? {
+              "username": emailOrMobile, // Only send the mobile number
+            }
+          : {
+              "username": emailOrMobile, // Send email
+              "password": password, // Send password
+            };
+
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+
+        // Store token or any required data in shared preferences
+        if (isMobileNumber == false) {
+          prefs.setString('token', responseBody['token']);
+        }
+
+        // Navigate to HomePage
+        Get.offAll(() => const HomePage());
+        Get.snackbar(
+          "Login Successful!",
+          "",
+        );
+      } else {
+        // Handle error response
+        Get.snackbar(
+          "Login Failed",
+          "Invalid credentials or server error.",
+        );
+      }
+    } catch (e) {
+      // Handle exceptions
+      Get.snackbar(
+        "Error",
+        "An error occurred: $e",
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +148,7 @@ class Emaillogin extends StatelessWidget {
               ),
             ),
             SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Padding(
                 padding: EdgeInsets.only(
                   top: size.height * 0.17,
@@ -55,9 +173,14 @@ class Emaillogin extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: size.height * 0.05),
-                    _buildTextField(context, 'Email or Number'),
+                    _buildTextField(
+                        context, 'Email or Number', emailController),
                     SizedBox(height: size.height * 0.02),
-                    _buildTextField(context, 'Password', isPassword: true),
+                    _buildTextField(
+                        context,
+                        'Password',
+                        isPassword: true,
+                        passwordController),
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
@@ -78,7 +201,7 @@ class Emaillogin extends StatelessWidget {
                       height: 52,
                       child: ElevatedButton(
                         onPressed: () {
-                          Get.to(() => const HomePage());
+                          loginUser();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.pink,
@@ -120,7 +243,8 @@ class Emaillogin extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(BuildContext context, String label,
+  Widget _buildTextField(
+      BuildContext context, String label, TextEditingController controller,
       {bool isPassword = false}) {
     final size = MediaQuery.of(context).size;
     return SizedBox(
@@ -128,6 +252,7 @@ class Emaillogin extends StatelessWidget {
       width: size.width * 0.8,
       child: TextField(
         obscureText: isPassword,
+        controller: controller,
         decoration: InputDecoration(
           labelText: label,
           labelStyle: TextStyle(color: Colors.black.withOpacity(0.7)),
