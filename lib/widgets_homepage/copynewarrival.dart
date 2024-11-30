@@ -1,9 +1,51 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:homepage/product/productpage.dart';
+import 'package:homepage/product/product_models.dart';
+import 'package:http/http.dart' as http;
 
-class CopyNewArrivalSection extends StatelessWidget {
+class CopyNewArrivalSection extends StatefulWidget {
   const CopyNewArrivalSection({super.key});
+
+  @override
+  State<CopyNewArrivalSection> createState() => _CopyNewArrivalSectionState();
+}
+
+class _CopyNewArrivalSectionState extends State<CopyNewArrivalSection> {
+  List<dynamic> items = [];
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchItems();
+  }
+
+  Future<void> fetchItems() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final response = await http.get(
+        Uri.parse('https://attiveg.com:8443/api/products?type=new-arrivals'));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        items = (data['data'] as List<dynamic>)
+            .map((item) => RelatedProduct.fromJson(item))
+            .toList();
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to load items')),
+      );
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +63,17 @@ class CopyNewArrivalSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 20, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     'New Arrivals',
                     style: TextStyle(
-                      fontFamily: 'DMSerifDisplay-regular',
-                      fontSize: 33,
+                      fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(224, 230, 203, 4),
+                      color: Color.fromARGB(225, 255, 239, 239),
                     ),
                   ),
                   Container(
@@ -45,7 +87,7 @@ class CopyNewArrivalSection extends StatelessWidget {
                         onPressed: () {},
                         child: const Text(
                           'View All',
-                          style: TextStyle(fontSize: 17, color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 17),
                         ),
                       ),
                     ),
@@ -54,13 +96,13 @@ class CopyNewArrivalSection extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
+              child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                children: [
-                  _buildProductCard(context),
-                  _buildProductCard(context),
-                  _buildProductCard(context),
-                ],
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final product = items[index];
+                  return _buildProductCard(context, product);
+                },
               ),
             ),
           ],
@@ -70,16 +112,18 @@ class CopyNewArrivalSection extends StatelessWidget {
   }
 }
 
-Widget _buildProductCard(context) {
+Widget _buildProductCard(BuildContext context, RelatedProduct product) {
+  final images = product.images;
+  final mediumImageUrl = images[0].medium;
+
   return Container(
-    margin: const EdgeInsets.only(
-        left: 14, right: 8, top: 0, bottom: 21), // Reduced margin
-    height: 250, // Reduced from 330
-    width: 165, // Reduced from 217 to maintain aspect ratio
+    margin: const EdgeInsets.only(left: 14, right: 8, top: 0, bottom: 21),
+    height: 300,
+    width: 165,
     decoration: BoxDecoration(
       color: Colors.white,
       border: Border.all(color: const Color.fromARGB(255, 255, 255, 255)),
-      borderRadius: BorderRadius.circular(8), // Slightly reduced radius
+      borderRadius: BorderRadius.circular(8),
     ),
     child: Stack(
       children: [
@@ -87,103 +131,72 @@ Widget _buildProductCard(context) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              onTap: () => Get.to(() => const ProductPage(id: 11)),
+              onTap: () => Get.to(() => ProductPage(id: product.id)),
               child: Container(
-                height: 165, // Reduced from 239
-                width: 165, // Reduced from 217
+                height: 165,
+                width: 165,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  image: const DecorationImage(
-                    image: AssetImage('assets/medicine.png'),
-                    fit: BoxFit.cover,
-                  ),
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: NetworkImage(mediumImageUrl),
+                      fit: BoxFit.cover,
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                product.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
                 ),
               ),
             ),
-
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8), // Reduced from 10
+            const SizedBox(height: 2),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Product Name',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12), // Added fontSize
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.star,
-                          color: Colors.amber, size: 14), // Reduced from 16
-                      SizedBox(width: 2), // Reduced from 4
-                      Text(
-                        '4.5',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 10), // Reduced from 12
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 8, top: 2), // Reduced padding
-              child: Text(
-                '250ml',
-                style: TextStyle(
-                    color: Colors.grey, fontSize: 10), // Reduced from 12
-              ),
-            ),
-            const SizedBox(height: 2), // Reduced from 8
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0), // Reduced from 10
-              child: Container(
-                width: 134, // Reduced from 176
-                alignment: Alignment.topLeft,
-                child: Row(
-                  children: [
-                    const Text(
-                      '₹999',
-                      style: TextStyle(
-                          color: Colors.pink,
-                          fontFamily: 'DMSerifDisplay',
-                          fontSize: 16), // Reduced from 19
+                    '₹${product.newPrice.toString()}',
+                    style: const TextStyle(
+                      color: Colors.pink,
+                      fontFamily: 'DMSerifDisplay',
+                      fontSize: 16,
                     ),
-                    const SizedBox(width: 6), // Reduced from 10
-                    const Text(
-                      '₹1089.00',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'DMSerifDisplay',
-                          fontSize: 7,
-                          decoration: TextDecoration.lineThrough,
-                          decorationThickness: 1.5), // Reduced from 8.4
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    '₹${product.oldPrice.toString()}',
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontFamily: 'DMSerifDisplay',
+                      fontSize: 7,
+                      decoration: TextDecoration.lineThrough,
+                      decorationThickness: 1.5,
                     ),
-                    const SizedBox(width: 6), // Reduced from 10
-                    Container(
-                      height: 14, // Reduced from 16
-                      width: 32, // Reduced from 38
-                      padding: const EdgeInsets.all(1), // Reduced from 2
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(4), // Reduced from 6
-                        color: const Color.fromARGB(255, 1, 104, 155),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '7% OFF',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontFamily: 'DMSerifDisplay',
-                            fontSize: 6, // Reduced from 7
-                          ),
+                  ),
+                  const SizedBox(width: 6),
+                  Container(
+                    height: 14,
+                    width: 32,
+                    padding: const EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      color: const Color.fromARGB(255, 1, 104, 155),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${product.discount.toInt()}% OFF',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 6,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Row(
@@ -227,13 +240,12 @@ Widget _buildProductCard(context) {
           top: 0,
           left: 0,
           child: Container(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 6, vertical: 3), // Reduced from 8,4
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
             decoration: const BoxDecoration(
               color: Colors.pink,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8), // Reduced from 10
-                bottomRight: Radius.circular(8), // Reduced from 10
+                topLeft: Radius.circular(8),
+                bottomRight: Radius.circular(8),
               ),
             ),
             child: const Text(
@@ -241,7 +253,7 @@ Widget _buildProductCard(context) {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 10, // Added smaller font size
+                fontSize: 10,
               ),
             ),
           ),
