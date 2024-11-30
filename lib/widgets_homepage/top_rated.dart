@@ -5,14 +5,14 @@ import 'package:homepage/product/product_models.dart';
 import 'package:http/http.dart' as http;
 import 'package:homepage/product/productpage.dart';
 
-class NewArrivalsSection extends StatefulWidget {
-  const NewArrivalsSection({super.key});
+class TopRatedSection extends StatefulWidget {
+  const TopRatedSection({super.key});
 
   @override
-  State<NewArrivalsSection> createState() => _NewArrivalsSectionState();
+  State<TopRatedSection> createState() => _TopRatedSectionState();
 }
 
-class _NewArrivalsSectionState extends State<NewArrivalsSection> {
+class _TopRatedSectionState extends State<TopRatedSection> {
   List<dynamic> items = [];
   bool isLoading = false;
 
@@ -27,8 +27,8 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
       isLoading = true;
     });
 
-    final response = await http.get(
-        Uri.parse('https://attiveg.com:8443/api/products?type=new-arrivals'));
+    final response = await http
+        .get(Uri.parse('https://attiveg.com:8443/api/products?type=top-rated'));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       setState(() {
@@ -71,7 +71,7 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          'New Arrivals',
+                          'Top Rated',
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
