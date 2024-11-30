@@ -61,7 +61,7 @@ class RelatedProducts extends StatelessWidget {
         print('id: $id OnTap pressed');
       },
       child: Container(
-        margin: const EdgeInsets.only(left: 14, right: 8, bottom: 10),
+        margin: const EdgeInsets.only(left: 14, right: 8, bottom: 45),
         height: 300,
         width: 165,
         decoration: BoxDecoration(

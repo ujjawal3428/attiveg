@@ -322,7 +322,7 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 8),
+                              
 
                               // Product Details
                               // const Column(
@@ -347,8 +347,6 @@ class _ProductPageState extends State<ProductPage> {
                               //   ],
                               // ),
 
-                              const SizedBox(height: 16),
-                              // Row with stars and ratings
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -375,11 +373,12 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 5,),
 
                               Row(
                                 children: [
                                   Container(
-                                    width: 500,
+                                    width: 308,
                                     alignment: Alignment.topLeft,
                                     child: Row(
                                       children: [
@@ -426,9 +425,10 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 5),
                               SizedBox(
                                 height: 50,
-                                width: 600,
+                                width: 300,
                                 child: Stack(
                                   alignment: Alignment.centerRight,
                                   children: [
@@ -478,31 +478,39 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedsection = 'Key-Benefits';
-                                    });
-                                  },
-                                  child: Text('Key-Benefits')),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedsection = 'How to use';
-                                    });
-                                  },
-                                  child: Text('How to use')),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedsection = 'Key Ingredients';
-                                    });
-                                  },
-                                  child: Text('Key Ingredients')),
-                            ],
+                          SizedBox(height: 5,),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        selectedsection = 'Key-Benefits';
+                                      });
+                                    },
+                                    child: Text('Key-Benefits')
+                                    ),
+                                    SizedBox(width: 10,),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        selectedsection = 'How to use';
+                                      });
+                                    },
+                                    child: Text('How to use')
+                                    ),
+                                    SizedBox(width: 10,),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        selectedsection = 'Key Ingredients';
+                                      });
+                                    },
+                                    child: Text('Key Ingredients')),
+                              ],
+                            ),
                           ),
                           // Separator Line
                           Divider(),
@@ -577,13 +585,10 @@ class _ProductPageState extends State<ProductPage> {
                                 ),
                               ),
                             ],
-                          )),
+                          )
+                          ),
 
-                      Container(
-                        width: 400,
-                        decoration: const BoxDecoration(color: Colors.white),
-                        child: const Column(),
-                      ),
+                   
 
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -651,21 +656,24 @@ class _ProductPageState extends State<ProductPage> {
                           const SizedBox(height: 20), // Space below the address
 
                           // Country of Origin Row
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.public,
-                                color: Colors.blue,
-                              ),
-                              const SizedBox(width: 8),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
-                                child: const Text(
-                                  'Country of Origin',
-                                  style: TextStyle(color: Colors.blue),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.public,
+                                  color: Colors.blue,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 8),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10.0),
+                                  child: const Text(
+                                    'Country of Origin',
+                                    style: TextStyle(color: Colors.blue),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(
                               height: 5), // Space below the country row
