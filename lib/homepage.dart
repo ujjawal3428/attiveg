@@ -12,8 +12,11 @@ import 'package:homepage/product/products_search_page.dart';
 import 'package:homepage/search.dart';
 import 'package:homepage/widgets_homepage/cetaphil.dart';
 import 'package:homepage/widgets_homepage/copynewarrival.dart';
+import 'package:homepage/widgets_homepage/featured.dart';
 import 'package:homepage/widgets_homepage/lovedbrands.dart';
 import 'package:homepage/widgets_homepage/newarrival.dart';
+import 'package:homepage/widgets_homepage/on_sale.dart';
+import 'package:homepage/widgets_homepage/top_rated.dart';
 import 'package:homepage/widgets_homepage/topbrands.dart';
 import 'package:homepage/wishlist.dart';
 import 'package:http/http.dart' as http;
@@ -238,6 +241,9 @@ class HomePageState extends State<HomePage> {
               ),
               TopBrandsSection(),
               NewArrivalsSection(),
+              FeaturedSection(),
+              OnSaleSection(),
+              TopRatedSection(),
               LovedBrandsSection(),
               CopyNewArrivalSection(),
               CetaphilSection(),
