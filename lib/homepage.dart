@@ -120,10 +120,9 @@ class HomePageState extends State<HomePage> {
                                   onTap: () {
                                     Get.to(() => const SearchPage());
                                   },
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 30,
                                     height: 30,
-
                                     child: ImageIcon(
                                       AssetImage('assets/search.png'),
                                       color: HexColor('#DD3877'),

@@ -120,10 +120,8 @@ class ProductSearchPageState extends State<ProductSearchPage> {
                                                         FontWeight.bold),
                                               ),
                                             ),
-                                            Positioned(
-                                              top: 0,
-                                              right: 0,
-                                              left: 0,
+                                            Align(
+                                              alignment: Alignment.topRight,
                                               child: Container(
                                                 height: 14,
                                                 width: 35,
@@ -140,10 +138,11 @@ class ProductSearchPageState extends State<ProductSearchPage> {
                                                 child: Row(
                                                   children: [
                                                     Icon(
-                                                        size: 9,
-                                                        Icons.star,
-                                                        color: Color.fromARGB(
-                                                            255, 0, 145, 197)),
+                                                      size: 9,
+                                                      Icons.star,
+                                                      color: Color.fromARGB(
+                                                          255, 0, 145, 197),
+                                                    ),
                                                     Center(
                                                       child: Text(
                                                         '${item['ratingsvalue']}' ==
