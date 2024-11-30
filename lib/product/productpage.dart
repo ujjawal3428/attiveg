@@ -23,6 +23,42 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   int _selectedIndex = 1;
+  int _selectedImageIndex = 0;
+  String selectedsection = 'Key-Benefits';
+
+  Widget _buildList(List<String> items) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: items.map((item) => Text('- $item')).toList(),
+      // RichText(
+      //                       text: const TextSpan(
+      //                         style:
+      //                             TextStyle(color: Colors.black, fontSize: 16),
+      //                         children: [
+      //                           TextSpan(
+      //                               text: '',
+      //                               style: TextStyle(
+      //                                 fontFamily: 'DMSerifDisplay',
+      //                               )),
+      //                         ],
+      //                       ),
+      //                     )
+    );
+  }
+
+  Widget _getSectionContent(Product product) {
+    switch (selectedsection) {
+      case 'Key-Benefits':
+        print(product.keyBenefits);
+        return _buildList(product.keyBenefits);
+      case 'How to use':
+        return _buildList(product.howToUse);
+      case 'Key Ingredients':
+        return _buildList(product.keyIngredients);
+      default:
+        return const Text('Select a section to view details.');
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -60,7 +96,7 @@ class _ProductPageState extends State<ProductPage> {
                 return Text('Error: ${snapshot.error}');
               } else {
                 final product = snapshot.data!;
-                print(product.relatedProducts);
+                print(product.keyIngredients);
                 return Scaffold(
                     body: SingleChildScrollView(
                         child: Column(children: [
@@ -76,7 +112,7 @@ class _ProductPageState extends State<ProductPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 25.0),
                             child: SizedBox(
-                              width: 702,
+                              width: double.infinity,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -199,7 +235,8 @@ class _ProductPageState extends State<ProductPage> {
                         decoration: BoxDecoration(
                           color: Colors.grey.shade500,
                           image: DecorationImage(
-                            image: NetworkImage(product.images[0].big),
+                            image: NetworkImage(
+                                product.images[_selectedImageIndex].big),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -207,249 +244,244 @@ class _ProductPageState extends State<ProductPage> {
                       const SizedBox(
                         height: 10,
                       ),
-
-                      // Product Details
-                      Container(
+                      // Horizontal image list
+                      SizedBox(
+                        height: 50,
                         width: 300,
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              blurRadius: 8,
-                              spreadRadius: 2,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children:
+                                List.generate(product.images.length, (index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedImageIndex =
+                                        index; // Update the selected image index
+                                  });
+                                },
+                                child: Container(
+                                  height: 30,
+                                  width: 60,
+                                  margin: const EdgeInsets.only(right: 16),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          product.images[index].small),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: _selectedImageIndex == index
+                                          ? Colors
+                                              .blue // Highlight selected image
+                                          : Colors.white,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Product Name
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  product.name,
-                                  style: TextStyle(
-                                      fontFamily: 'DMSerifDisplay',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {},
-                                      child: SizedBox(
-                                        width: 30,
-                                        height: 30,
-                                        child: Image.asset(
-                                            'assets/productheart.png'),
-                                      ),
+                      ),
+                      // Product Details
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                blurRadius: 8,
+                                spreadRadius: 2,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Product Name
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 18),
+                                      children: [
+                                        TextSpan(
+                                            text: product.name,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'DMSerifDisplay',
+                                            )),
+                                      ],
                                     ),
-                                    const SizedBox(width: 8),
-                                    InkWell(
-                                      onTap: () {},
-                                      child: SizedBox(
-                                        width: 30,
-                                        height: 30,
-                                        child: Image.asset(
-                                            'assets/productshare.png'),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-
-                            const SizedBox(height: 8),
-
-                            // Product Details
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Cetaphil Face Wash Gentle Skin',
-                                    style: TextStyle(
-                                        fontFamily: 'DMSerifDisplay',
-                                        fontSize: 14)),
-                                Text('Cleanser for Dry to Normal, Sensitive',
-                                    style: TextStyle(
-                                        fontFamily: 'DMSerifDisplay',
-                                        fontSize: 14)),
-                                Text('Skin, 125 ml Hydrating Face Wash with',
-                                    style: TextStyle(
-                                        fontFamily: 'DMSerifDisplay',
-                                        fontSize: 14)),
-                                Text('Niacinamide, Vitamin B5',
-                                    style: TextStyle(
-                                        fontFamily: 'DMSerifDisplay',
-                                        fontSize: 14)),
-                              ],
-                            ),
-
-                            const SizedBox(height: 16),
-
-                            // Row with stars and ratings
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.star, color: Colors.yellow[700]),
-                                    Icon(Icons.star, color: Colors.yellow[700]),
-                                    Icon(Icons.star, color: Colors.yellow[700]),
-                                    Icon(Icons.star, color: Colors.yellow[700]),
-                                    Icon(Icons.star_border,
-                                        color: Colors.yellow[700]),
-                                    const SizedBox(width: 4),
-                                    const Text('4.5/5.0'),
-                                    const SizedBox(width: 8),
-                                    const Text('(21)'),
-                                  ],
-                                ),
-                              ],
-                            ),
-
-                            Row(
-                              children: [
-                                Container(
-                                  width: 176,
-                                  alignment: Alignment.topLeft,
-                                  child: Row(
+                                  ),
+                                  Row(
                                     children: [
-                                      const Text(
-                                        '₹999',
-                                        style: TextStyle(
-                                          color: Colors.pink,
-                                          fontFamily: 'DMSerifDisplay',
-                                          fontSize: 24,
+                                      InkWell(
+                                        onTap: () {},
+                                        child: SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: Image.asset(
+                                              'assets/productheart.png'),
                                         ),
                                       ),
-                                      const SizedBox(width: 10),
-                                      const Text(
-                                        '₹1089.00',
-                                        style: TextStyle(
-                                          color: Colors.pink,
-                                          fontFamily: 'DMSerifDisplay',
-                                          fontSize: 12,
-                                          decoration:
-                                              TextDecoration.lineThrough,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Container(
-                                        padding: const EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          color: const Color.fromARGB(
-                                              255, 1, 104, 155),
-                                        ),
-                                        child: const Text(
-                                          '7% OFF',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255),
-                                            fontFamily: 'DMSerifDisplay',
-                                            fontSize: 12,
-                                          ),
+                                      const SizedBox(width: 8),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: Image.asset(
+                                              'assets/productshare.png'),
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 50,
-                              width: 300,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+
+                              // Product Details
+                              // const Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+                              //     Text('Cetaphil Face Wash Gentle Skin',
+                              //         style: TextStyle(
+                              //             fontFamily: 'DMSerifDisplay',
+                              //             fontSize: 14)),
+                              //     Text('Cleanser for Dry to Normal, Sensitive',
+                              //         style: TextStyle(
+                              //             fontFamily: 'DMSerifDisplay',
+                              //             fontSize: 14)),
+                              //     Text('Skin, 125 ml Hydrating Face Wash with',
+                              //         style: TextStyle(
+                              //             fontFamily: 'DMSerifDisplay',
+                              //             fontSize: 14)),
+                              //     Text('Niacinamide, Vitamin B5',
+                              //         style: TextStyle(
+                              //             fontFamily: 'DMSerifDisplay',
+                              //             fontSize: 14)),
+                              //   ],
+                              // ),
+
+                              const SizedBox(height: 16),
+                              // Row with stars and ratings
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      // Generate the stars dynamically
+                                      for (int i = 1; i <= 5; i++)
+                                        Icon(
+                                          i <= product.ratingsValue
+                                              ? Icons.star // Full star
+                                              : i - product.ratingsValue < 1
+                                                  ? Icons.star_half // Half star
+                                                  : Icons
+                                                      .star_border, // Empty star
+                                          color: Colors.yellow[700],
+                                        ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                          '${product.ratingsValue.toStringAsFixed(1)}/5.0'),
+                                      const SizedBox(width: 8),
+                                      Text('(${product.ratingsCount})'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 500,
+                                    alignment: Alignment.topLeft,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          '₹${product.newPrice.toString()}',
+                                          style: TextStyle(
+                                            color: Colors.pink,
+                                            fontFamily: 'DMSerifDisplay',
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Text(
+                                          '₹${product.oldPrice.toString()}',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontFamily: 'DMSerifDisplay',
+                                            fontSize: 12,
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Container(
+                                          padding: const EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color: const Color.fromARGB(
+                                                255, 1, 104, 155),
+                                          ),
+                                          child: Text(
+                                            '${product.discount.toInt()}% OFF',
+                                            style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 255, 255, 255),
+                                              fontFamily: 'DMSerifDisplay',
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 50,
+                                width: 600,
+                                child: Stack(
+                                  alignment: Alignment.centerRight,
                                   children: [
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 50, // Height of the button
-                                        width: 120, // Width of the button
-                                        decoration: BoxDecoration(
-                                          image: const DecorationImage(
-                                            image: AssetImage(
-                                                'assets/image1.png'), // Replace with your image path
-                                            fit: BoxFit.cover,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
+                                    const TextField(
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Enter text',
                                       ),
                                     ),
-                                    const SizedBox(width: 16),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 50,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                          image: const DecorationImage(
-                                            image: AssetImage(
-                                                'assets/image2.png'), // Replace with your image path
-                                            fit: BoxFit.cover,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                    TextButton(
+                                      child: const Text(
+                                        'check availability',
+                                        style: TextStyle(
+                                          fontFamily: 'DMSerifDisplay',
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 50,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                          image: const DecorationImage(
-                                            image: AssetImage(
-                                                'assets/image3.png'), // Replace with your image path
-                                            fit: BoxFit.cover,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
+                                      onPressed: () {
+                                        // Handle button press
+                                      },
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 50,
-                              width: 300,
-                              child: Stack(
-                                alignment: Alignment.centerRight,
-                                children: [
-                                  const TextField(
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      hintText: 'Enter text',
-                                    ),
-                                  ),
-                                  TextButton(
-                                    child: const Text(
-                                      'check availability',
-                                      style: TextStyle(
-                                        fontFamily: 'DMSerifDisplay',
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      // Handle button press
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -474,199 +506,37 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                             ),
                           ),
-
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      selectedsection = 'Key-Benefits';
+                                    });
+                                  },
+                                  child: Text('Key-Benefits')),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      selectedsection = 'How to use';
+                                    });
+                                  },
+                                  child: Text('How to use')),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      selectedsection = 'Key Ingredients';
+                                    });
+                                  },
+                                  child: Text('Key Ingredients')),
+                            ],
+                          ),
                           // Separator Line
-                          Container(
-                            decoration:
-                                const BoxDecoration(color: Colors.black),
-                            height: 1,
-                            width: 300,
-                          ),
+                          Divider(),
 
-                          // Horizontal Scrollable Images
-                          SizedBox(
-                            height: 50,
-                            width: 300,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      height: 30,
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                        image: const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/image1.png'), // Replace with your image path
-                                          fit: BoxFit.cover,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      height: 30,
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                        image: const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/image2.png'), // Replace with your image path
-                                          fit: BoxFit.cover,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      height: 30,
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                        image: const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/image3.png'), // Replace with your image path
-                                          fit: BoxFit.cover,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          // Rich Text Paragraph
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Bullet Point
-                              const Text(
-                                '• ', // Dot character
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
-                              // Paragraph Text
-                              Expanded(
-                                  child: RichText(
-                                text: const TextSpan(
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          "This is a lorem gypsum hydrate of the eraculer circumstances where a person with high blood pressure would not handle a cup of tea for some milk.",
-                                      style: TextStyle(
-                                        fontFamily: 'DMSerifDisplay',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ))
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Bullet Point
-                              const Text(
-                                '• ', // Dot character
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
-                              // Paragraph Text
-                              Expanded(
-                                  child: RichText(
-                                text: const TextSpan(
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                  children: [
-                                    TextSpan(
-                                        text:
-                                            "This is a lorem gypsum hydrate of the eraculer circumstances where a person with high blood pressure would not handle a cup of tea for some milk.",
-                                        style: TextStyle(
-                                          fontFamily: 'DMSerifDisplay',
-                                        )),
-                                  ],
-                                ),
-                              ))
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Bullet Point
-                              const Text(
-                                '• ', // Dot character
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
-                              // Paragraph Text
-                              Expanded(
-                                  child: RichText(
-                                text: const TextSpan(
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                  children: [
-                                    TextSpan(
-                                        text:
-                                            "This is a lorem gypsum hydrate of the eraculer circumstances where a person with high blood pressure would not handle a cup of tea for some milk.",
-                                        style: TextStyle(
-                                          fontFamily: 'DMSerifDisplay',
-                                        )),
-                                  ],
-                                ),
-                              ))
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Bullet Point
-                              const Text(
-                                '• ', // Dot character
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
-                              // Paragraph Text
-                              Expanded(
-                                  child: RichText(
-                                text: const TextSpan(
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          "This is a lorem gypsum hydrate of the eraculer circumstances where a person with high blood pressure would not handle a cup of tea for some milk.",
-                                      style: TextStyle(
-                                        fontFamily: 'DMSerifDisplay',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ))
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 16),
+                          _getSectionContent(product),
                         ]),
                       ),
                       Container(
@@ -687,7 +557,7 @@ class _ProductPageState extends State<ProductPage> {
                                     const BoxDecoration(color: Colors.white),
                                 child: const SizedBox(
                                   child: Text(
-                                    'Highlights',
+                                    'Product Description',
                                     style: TextStyle(
                                         fontFamily: 'DMSerifDisplay',
                                         color: Colors.pink),
@@ -706,13 +576,12 @@ class _ProductPageState extends State<ProductPage> {
                                 height: 10,
                               ),
                               RichText(
-                                text: const TextSpan(
+                                text: TextSpan(
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 16),
                                   children: [
                                     TextSpan(
-                                      text:
-                                          "This is a lorem gypsum hydrate of the eraculer circumstances where a person with high blood pressure would not handle a cup of tea for some milk.",
+                                      text: product.description,
                                       style: TextStyle(
                                         fontFamily: 'DMSerifDisplay',
                                       ),
@@ -723,22 +592,6 @@ class _ProductPageState extends State<ProductPage> {
 
                               const SizedBox(
                                 height: 10,
-                              ),
-
-                              RichText(
-                                text: const TextSpan(
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          "This is a lorem gypsum hydrate of the eraculer circumstances where a person with high blood pressure would not handle a cup of tea for some milk.",
-                                      style: TextStyle(
-                                        fontFamily: 'DMSerifDisplay',
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ),
 
                               const SizedBox(height: 20),
@@ -816,8 +669,8 @@ class _ProductPageState extends State<ProductPage> {
                           // Flexible Address Text
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
-                            child: const Text(
-                              '1234 Elm Street, Suite 567, Springfield, IL 62704, USA',
+                            child: Text(
+                              product.importer,
                               style: TextStyle(fontSize: 16),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -848,8 +701,8 @@ class _ProductPageState extends State<ProductPage> {
                           // Country Name
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
-                            child: const Text(
-                              'United States',
+                            child: Text(
+                              product.origin,
                               style: TextStyle(color: Colors.grey),
                             ),
                           ),
@@ -901,7 +754,7 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                       Container(
                         width: 350,
-                        height: 56,
+                        height: 70,
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey), // Grey border
@@ -918,7 +771,7 @@ class _ProductPageState extends State<ProductPage> {
                                 Row(
                                   children: [
                                     Text(
-                                      '₹3,449.00',
+                                      '₹${product.oldPrice.toString()}',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey,
@@ -927,7 +780,7 @@ class _ProductPageState extends State<ProductPage> {
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      '21% OFF',
+                                      '${product.discount.toInt()}% OFF',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.green,
@@ -937,7 +790,7 @@ class _ProductPageState extends State<ProductPage> {
                                   ],
                                 ),
                                 Text(
-                                  '₹3,449.00',
+                                  '₹${product.newPrice.toString()}',
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
@@ -1024,9 +877,7 @@ class CouponContainer extends StatelessWidget {
             top: 8,
             child: InkWell(
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Coupon copied!')),
-                );
+                Get.snackbar('Coupon Copied!', '');
               },
               child: Container(
                 width: 40,
@@ -1042,246 +893,4 @@ class CouponContainer extends StatelessWidget {
           ),
         ]));
   }
-}
-
-//NEW ARRIVALS SECTION
-Widget _buildNewArrivalsSection(dynamic context) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 16, bottom: 16),
-    child: Container(
-      height: 380,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/medicinebg.png'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'New Arrivals',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 255, 230, 67),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'View All',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                _buildProductCard(context),
-                _buildProductCard(context),
-                _buildProductCard(context),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget _buildProductCard(context) {
-  return Container(
-    margin: const EdgeInsets.only(
-        left: 8, right: 8, top: 0, bottom: 15), // Reduced margin
-    height: 250, // Reduced from 330
-    width: 165, // Reduced from 217 to maintain aspect ratio
-    decoration: BoxDecoration(
-      color: Colors.white,
-      border: Border.all(color: const Color.fromARGB(255, 255, 255, 255)),
-      borderRadius: BorderRadius.circular(8), // Slightly reduced radius
-    ),
-    child: Stack(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            InkWell(
-              onTap: () => Get.to(() => const ProductPage(id: 11)),
-              child: Container(
-                height: 180, // Reduced from 239
-                width: 165, // Reduced from 217
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  image: const DecorationImage(
-                    image: AssetImage('assets/medicine.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 4), // Reduced from 8
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8), // Reduced from 10
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Product Name',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12), // Added fontSize
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.star,
-                          color: Colors.amber, size: 14), // Reduced from 16
-                      SizedBox(width: 2), // Reduced from 4
-                      Text(
-                        '4.5',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 10), // Reduced from 12
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 8, top: 2), // Reduced padding
-              child: Text(
-                '250ml',
-                style: TextStyle(
-                    color: Colors.grey, fontSize: 10), // Reduced from 12
-              ),
-            ),
-            const SizedBox(height: 2), // Reduced from 8
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0), // Reduced from 10
-              child: Container(
-                width: 134, // Reduced from 176
-                alignment: Alignment.topLeft,
-                child: Row(
-                  children: [
-                    const Text(
-                      '₹999',
-                      style: TextStyle(
-                          color: Colors.pink,
-                          fontFamily: 'DMSerifDisplay',
-                          fontSize: 16), // Reduced from 19
-                    ),
-                    const SizedBox(width: 6), // Reduced from 10
-                    const Text(
-                      '₹1089.00',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'DMSerifDisplay',
-                          fontSize: 7,
-                          decoration: TextDecoration.lineThrough,
-                          decorationThickness: 1.5), // Reduced from 8.4
-                    ),
-                    const SizedBox(width: 6), // Reduced from 10
-                    Container(
-                      height: 14, // Reduced from 16
-                      width: 32, // Reduced from 38
-                      padding: const EdgeInsets.all(1), // Reduced from 2
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(4), // Reduced from 6
-                        color: const Color.fromARGB(255, 1, 104, 155),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '7% OFF',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontFamily: 'DMSerifDisplay',
-                            fontSize: 6, // Reduced from 7
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8), // Reduced from 10
-                  child: SizedBox(
-                    height: 25, // Reduced from 35
-                    width: 25, // Reduced from 35
-                    child: GestureDetector(
-                      onTap: () {
-                        // Handle button tap here
-                      },
-                      child: Image.asset(
-                        'assets/heartbutton@4x.png',
-                        width: 24.0, // Reduced from 30
-                        height: 24.0, // Reduced from 30
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: SizedBox(
-                    height: 50,
-                    width: 109,
-                    child: InkWell(
-                      onTap: () {},
-                      child: Image.asset(
-                        'assets/addtocartbutton.png',
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        Positioned(
-          top: 0,
-          left: 0,
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 6, vertical: 3), // Reduced from 8,4
-            decoration: const BoxDecoration(
-              color: Colors.pink,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8), // Reduced from 10
-                bottomRight: Radius.circular(8), // Reduced from 10
-              ),
-            ),
-            child: const Text(
-              'New',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 10, // Added smaller font size
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
 }

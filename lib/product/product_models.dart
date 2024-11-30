@@ -33,6 +33,13 @@ class Product {
   final Category category;
   final Brand brand;
   final List<RelatedProduct> relatedProducts;
+  final String importer;
+  final String origin;
+  final int ratingsCount;
+  final double ratingsValue;
+  final List<String> keyBenefits; // New field
+  final List<String> howToUse; // New field
+  final List<String> keyIngredients;
 
   Product({
     required this.id,
@@ -45,6 +52,13 @@ class Product {
     required this.category,
     required this.brand,
     required this.relatedProducts,
+    required this.importer,
+    required this.origin,
+    required this.ratingsCount,
+    required this.ratingsValue,
+    required this.keyBenefits,
+    required this.howToUse,
+    required this.keyIngredients,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -63,6 +77,13 @@ class Product {
       relatedProducts: (json['related'] as List<dynamic>)
           .map((related) => RelatedProduct.fromJson(related))
           .toList(),
+      importer: json['importerDetails'] ?? 'Unknown',
+      ratingsCount: json['ratingsCount'] ?? 0,
+      ratingsValue: json['ratingsValue'] ?? 0.0,
+      origin: json['originCountry'] ?? 'Unknown',
+      keyBenefits: List<String>.from(json['keyBenefits'] ?? []), // Map field
+      howToUse: List<String>.from(json['howToUse'] ?? []), // Map field
+      keyIngredients: List<String>.from(json['keyIngredients'] ?? []),
     );
   }
 }
@@ -82,10 +103,10 @@ class Images {
 
   factory Images.fromJson(Map<String, dynamic> json) {
     return Images(
-      id: json['id'],
-      small: json['small'],
-      medium: json['medium'],
-      big: json['big'],
+      id: json['id'] ?? 0,
+      small: json['small'] ?? 'unknown',
+      medium: json['medium'] ?? 'unknown',
+      big: json['big'] ?? 'unknown',
     );
   }
 }
@@ -103,9 +124,9 @@ class Category {
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      id: json['id'],
-      name: json['name'],
-      slug: json['slug'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? 'unknown',
+      slug: json['slug'] ?? 'unknown',
     );
   }
 }
@@ -123,9 +144,9 @@ class Brand {
 
   factory Brand.fromJson(Map<String, dynamic> json) {
     return Brand(
-      id: json['id'],
-      name: json['name'],
-      image: json['image'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? 'unknown',
+      image: json['image'] ?? 'unknown',
     );
   }
 }
@@ -149,11 +170,11 @@ class RelatedProduct {
 
   factory RelatedProduct.fromJson(Map<String, dynamic> json) {
     return RelatedProduct(
-      id: json['id'],
-      name: json['name'],
-      newPrice: json['newPrice'],
-      oldPrice: json['oldPrice'],
-      discount: json['discount'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? 'unknown',
+      newPrice: json['newPrice'] ?? 0.0,
+      oldPrice: json['oldPrice'] ?? 0.0,
+      discount: json['discount'] ?? 0.0,
       images: (json['images'] as List<dynamic>)
           .map((image) => Images.fromJson(image))
           .toList(),
