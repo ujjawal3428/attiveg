@@ -66,7 +66,7 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 20, bottom: 10),
+                        left: 20, right: 20, top: 20, bottom: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -115,12 +115,13 @@ class _NewArrivalsSectionState extends State<NewArrivalsSection> {
   }
 }
 
+
 Widget _buildProductCard(BuildContext context, RelatedProduct product) {
   final images = product.images;
   final mediumImageUrl = images[0].medium;
 
   return Container(
-    margin: const EdgeInsets.only(left: 14, right: 8, top: 0, bottom: 21),
+    margin: const EdgeInsets.only(left: 14, right: 8, top: 0, bottom: 20),
     height: 300,
     width: 165,
     decoration: BoxDecoration(
@@ -146,14 +147,51 @@ Widget _buildProductCard(BuildContext context, RelatedProduct product) {
                     )),
               ),
             ),
+            SizedBox(
+              height: 5,
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                product.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                ),
+              padding: const EdgeInsets.only(top: 0, left: 5),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 120, 
+                    child: Text(
+                      product.name,
+                      maxLines: 2,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 14,
+                    width: 26,
+                    padding: EdgeInsets.only(left: 2, right: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: Colors.pink.shade50,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.star,
+                          size: 9,
+                          color: Color.fromARGB(255, 0, 145, 197),
+                        ),
+                        Text(
+                          '0.5',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 0, 145, 197),
+                            fontSize: 8.4,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 2),
@@ -202,36 +240,34 @@ Widget _buildProductCard(BuildContext context, RelatedProduct product) {
                 ],
               ),
             ),
+            SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 8), // Reduced from 10
+                  padding: const EdgeInsets.only(left: 8),
                   child: SizedBox(
-                    height: 25, // Reduced from 35
-                    width: 25, // Reduced from 35
+                    height: 25,
+                    width: 25,
                     child: GestureDetector(
-                      onTap: () {
-                        // Handle button tap here
-                      },
+                      onTap: () {},
                       child: Image.asset(
                         'assets/heartbutton@4x.png',
-                        width: 24.0, // Reduced from 30
-                        height: 24.0, // Reduced from 30
+                        width: 24.0,
+                        height: 24.0,
                       ),
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
-                  child: SizedBox(
-                    height: 54,
-                    width: 109,
-                    child: InkWell(
-                      onTap: () {},
-                      child: Image.asset(
-                        'assets/addtocartbutton.png',
-                      ),
+                  child: InkWell(
+                    onTap: () {},
+                    child: Image.asset(
+                      height: 25,
+                      width: 109,
+                      'assets/addtocartbutton.png',
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
