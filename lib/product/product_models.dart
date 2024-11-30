@@ -36,7 +36,7 @@ class Product {
   final String? importer;
   final String? origin;
   final int? ratingsCount;
-  final double? ratingsValue;
+  final int? ratingsValue;
   final List<String?> keyBenefits; // New field
   final List<String?> howToUse; // New field
   final List<String?> keyIngredients;
@@ -79,7 +79,7 @@ class Product {
           .toList(),
       importer: json['importerDetails'] ?? 'Unknown',
       ratingsCount: json['ratingsCount'] ?? 0,
-      ratingsValue: json['ratingsValue'] ?? 0.0,
+      ratingsValue: json['ratingsValue'] ?? 0,
       origin: json['originCountry'] ?? 'Unknown',
       keyBenefits: List<String>.from(json['keyBenefits'] ?? []), // Map field
       howToUse: List<String>.from(json['howToUse'] ?? []), // Map field
