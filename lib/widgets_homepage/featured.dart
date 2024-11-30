@@ -54,14 +54,8 @@ class _FeaturedSectionState extends State<FeaturedSection> {
         ? const Center(child: CircularProgressIndicator())
         : Padding(
             padding: const EdgeInsets.only(top: 16, bottom: 16),
-            child: Container(
+            child: SizedBox(
               height: 392,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/medicinebg.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -72,16 +66,16 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          'Featured',
+                          'Suggested Items',
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(225, 255, 239, 239),
+                            color: Colors.pink,
                           ),
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
+                            border: Border.all(color: Colors.pink),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: SizedBox(
@@ -92,8 +86,8 @@ class _FeaturedSectionState extends State<FeaturedSection> {
                               },
                               child: const Text(
                                 'View All',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 17),
+                                style:
+                                    TextStyle(color: Colors.pink, fontSize: 17),
                               ),
                             ),
                           ),
