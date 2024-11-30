@@ -30,19 +30,6 @@ class _ProductPageState extends State<ProductPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: items.map((item) => Text('- $item')).toList(),
-      // RichText(
-      //                       text: const TextSpan(
-      //                         style:
-      //                             TextStyle(color: Colors.black, fontSize: 16),
-      //                         children: [
-      //                           TextSpan(
-      //                               text: '',
-      //                               style: TextStyle(
-      //                                 fontFamily: 'DMSerifDisplay',
-      //                               )),
-      //                         ],
-      //                       ),
-      //                     )
     );
   }
 
@@ -143,12 +130,7 @@ class _ProductPageState extends State<ProductPage> {
                                           width: 169,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
-                                            border: Border.all(
-                                              color: Colors.pink.shade100,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(60),
+                                           
                                           ),
                                           child: Row(
                                             children: [

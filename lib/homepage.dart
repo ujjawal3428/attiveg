@@ -109,70 +109,64 @@ class HomePageState extends State<HomePage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.pinkAccent, width: 1),
-                                borderRadius: BorderRadius.circular(30)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => const SearchPage());
-                                    },
-                                    child: Container(
-                                      width: 35,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border.all(
-                                            color: HexColor('#DD3877'),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(50)),
-                                      child: ImageIcon(
-                                        AssetImage('assets/search.png'),
-                                        color: HexColor('#DD3877'),
-                                        size: 30,
-                                      ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => const SearchPage());
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(
+                                          color: HexColor('#DD3877'),
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    child: ImageIcon(
+                                      AssetImage('assets/search.png'),
+                                      color: HexColor('#DD3877'),
+                                      size: 25,
                                     ),
                                   ),
-                                  const SizedBox(width: 10),
-                                  GestureDetector(
-                                      onTap: () {
-                                        Get.to(() => const NotificationPage());
-                                      },
-                                      child: ImageIcon(
-                                        AssetImage('assets/bell.png'),
-                                        color: HexColor('#DD3877'),
-                                        size: 30,
-                                      )),
-                                  const SizedBox(width: 10),
-                                  GestureDetector(
+                                ),
+                                const SizedBox(width: 7),
+                                GestureDetector(
                                     onTap: () {
-                                      Get.to(() => const WishlistPage());
+                                      Get.to(() => const NotificationPage());
                                     },
                                     child: ImageIcon(
-                                      AssetImage('assets/heart.png'),
+                                      AssetImage('assets/bell.png'),
                                       color: HexColor('#DD3877'),
-                                      size: 30,
-                                    ),
+                                      size: 25,
+                                    )),
+                                const SizedBox(width: 7),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => const WishlistPage());
+                                  },
+                                  child: ImageIcon(
+                                    AssetImage('assets/heart.png'),
+                                    color: HexColor('#DD3877'),
+                                    size: 25,
                                   ),
-                                  const SizedBox(width: 10),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => const CartPage());
-                                    },
-                                    child: ImageIcon(
-                                      AssetImage('assets/cart.png'),
-                                      color: HexColor('#DD3877'),
-                                      size: 30,
-                                    ),
+                                ),
+                                const SizedBox(width: 7),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => const CartPage());
+                                  },
+                                  child: ImageIcon(
+                                    AssetImage('assets/cart.png'),
+                                    color: HexColor('#DD3877'),
+                                    size: 25,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
