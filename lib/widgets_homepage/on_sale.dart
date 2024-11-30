@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:homepage/product/product_models.dart';
+import 'package:homepage/product/view_all.dart';
 import 'package:http/http.dart' as http;
 import 'package:homepage/product/productpage.dart';
 
@@ -86,7 +87,9 @@ class _OnSaleSectionState extends State<OnSaleSection> {
                           child: SizedBox(
                             height: 40,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(() => ViewAll(title: 'All Products'));
+                              },
                               child: const Text(
                                 'View All',
                                 style: TextStyle(
@@ -154,7 +157,7 @@ Widget _buildProductCard(BuildContext context, RelatedProduct product) {
               child: Row(
                 children: [
                   SizedBox(
-                    width: 120, 
+                    width: 120,
                     child: Text(
                       product.name,
                       maxLines: 2,
@@ -166,7 +169,7 @@ Widget _buildProductCard(BuildContext context, RelatedProduct product) {
                   ),
                   Container(
                     height: 14,
-                    width: 26,
+                    width: 27,
                     padding: EdgeInsets.only(left: 2, right: 2),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
@@ -181,7 +184,7 @@ Widget _buildProductCard(BuildContext context, RelatedProduct product) {
                           color: Color.fromARGB(255, 0, 145, 197),
                         ),
                         Text(
-                          '0.5',
+                          product.ratingsValue.toString(),
                           style: TextStyle(
                             color: Color.fromARGB(255, 0, 145, 197),
                             fontSize: 8.4,
@@ -239,7 +242,9 @@ Widget _buildProductCard(BuildContext context, RelatedProduct product) {
                 ],
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

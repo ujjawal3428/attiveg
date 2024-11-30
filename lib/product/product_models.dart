@@ -158,6 +158,7 @@ class RelatedProduct {
   final double oldPrice;
   final double discount;
   final List<Images> images;
+  final int? ratingsValue;
 
   RelatedProduct({
     required this.id,
@@ -166,6 +167,7 @@ class RelatedProduct {
     required this.oldPrice,
     required this.discount,
     required this.images,
+    required this.ratingsValue,
   });
 
   factory RelatedProduct.fromJson(Map<String, dynamic> json) {
@@ -178,6 +180,7 @@ class RelatedProduct {
       images: (json['images'] as List<dynamic>)
           .map((image) => Images.fromJson(image))
           .toList(),
+      ratingsValue: json['ratingsValue'] ?? 0,
     );
   }
 }
