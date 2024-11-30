@@ -30,16 +30,16 @@ class Product {
   final double oldPrice;
   final double discount;
   final List<Images> images;
-  final Category category;
-  final Brand brand;
+  final Category? category;
+  final Brand? brand;
   final List<RelatedProduct> relatedProducts;
-  final String importer;
-  final String origin;
-  final int ratingsCount;
-  final double ratingsValue;
-  final List<String> keyBenefits; // New field
-  final List<String> howToUse; // New field
-  final List<String> keyIngredients;
+  final String? importer;
+  final String? origin;
+  final int? ratingsCount;
+  final double? ratingsValue;
+  final List<String?> keyBenefits; // New field
+  final List<String?> howToUse; // New field
+  final List<String?> keyIngredients;
 
   Product({
     required this.id,
@@ -73,7 +73,7 @@ class Product {
           .map((image) => Images.fromJson(image))
           .toList(),
       category: Category.fromJson(json['category']),
-      brand: Brand.fromJson(json['brand']),
+      brand: json['brand'] != null ? Brand.fromJson(json['brand']) : null,
       relatedProducts: (json['related'] as List<dynamic>)
           .map((related) => RelatedProduct.fromJson(related))
           .toList(),

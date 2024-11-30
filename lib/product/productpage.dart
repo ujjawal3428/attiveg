@@ -26,7 +26,7 @@ class _ProductPageState extends State<ProductPage> {
   int _selectedImageIndex = 0;
   String selectedsection = 'Key-Benefits';
 
-  Widget _buildList(List<String> items) {
+  Widget _buildList(List<String?> items) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: items.map((item) => Text('- $item')).toList(),
@@ -386,9 +386,9 @@ class _ProductPageState extends State<ProductPage> {
                                       // Generate the stars dynamically
                                       for (int i = 1; i <= 5; i++)
                                         Icon(
-                                          i <= product.ratingsValue
+                                          i <= product.ratingsValue!
                                               ? Icons.star // Full star
-                                              : i - product.ratingsValue < 1
+                                              : i - product.ratingsValue! < 1
                                                   ? Icons.star_half // Half star
                                                   : Icons
                                                       .star_border, // Empty star
@@ -396,7 +396,7 @@ class _ProductPageState extends State<ProductPage> {
                                         ),
                                       const SizedBox(width: 4),
                                       Text(
-                                          '${product.ratingsValue.toStringAsFixed(1)}/5.0'),
+                                          '${product.ratingsValue!.toStringAsFixed(1)}/5.0'),
                                       const SizedBox(width: 8),
                                       Text('(${product.ratingsCount})'),
                                     ],
@@ -670,7 +670,7 @@ class _ProductPageState extends State<ProductPage> {
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: Text(
-                              product.importer,
+                              product.importer!,
                               style: TextStyle(fontSize: 16),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -702,7 +702,7 @@ class _ProductPageState extends State<ProductPage> {
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: Text(
-                              product.origin,
+                              product.origin!,
                               style: TextStyle(color: Colors.grey),
                             ),
                           ),
