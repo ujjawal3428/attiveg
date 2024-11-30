@@ -66,7 +66,7 @@ class TopBrandsSectionState extends State<TopBrandsSection> {
   Widget _buildPromotionalSection(String imageUrl, String url) {
     return Container(
       width: 356,
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 0,bottom: 16),
       child: Stack(
         children: [
           Positioned.fill(
