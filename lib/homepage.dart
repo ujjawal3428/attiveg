@@ -120,13 +120,7 @@ class HomePageState extends State<HomePage> {
                                   child: Container(
                                     width: 30,
                                     height: 30,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          color: HexColor('#DD3877'),
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
+
                                     child: ImageIcon(
                                       AssetImage('assets/search.png'),
                                       color: HexColor('#DD3877'),

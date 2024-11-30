@@ -134,32 +134,22 @@ class _ProductPageState extends State<ProductPage> {
                                           ),
                                           child: Row(
                                             children: [
-                                              const SizedBox(width: 2),
+                                              const SizedBox(width: 32),
                                               GestureDetector(
                                                 onTap: () {
                                                   Get.to(
                                                       () => const SearchPage());
                                                 },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color:
-                                                          Colors.pink.shade100,
-                                                      width: 1.0,
-                                                    ),
-                                                  ),
-                                                  child: ClipOval(
-                                                    child: Image.asset(
-                                                      'assets/search.png',
-                                                      width: 30,
-                                                      height: 30,
-                                                      fit: BoxFit.cover,
-                                                    ),
+                                                child: ClipOval(
+                                                  child: Image.asset(
+                                                    'assets/search.png',
+                                                    width: 25,
+                                                    height: 25,
+                                                    fit: BoxFit.cover,
                                                   ),
                                                 ),
                                               ),
-                                              const SizedBox(width: 10),
+                                              const SizedBox(width: 7),
                                               GestureDetector(
                                                 onTap: () {
                                                   Get.to(() =>
@@ -167,12 +157,12 @@ class _ProductPageState extends State<ProductPage> {
                                                 },
                                                 child: Image.asset(
                                                   'assets/bell.png',
-                                                  width: 30,
-                                                  height: 30,
+                                                  width: 25,
+                                                  height: 25,
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              const SizedBox(width: 10),
+                                              const SizedBox(width: 7),
                                               GestureDetector(
                                                 onTap: () {
                                                   Get.to(() =>
@@ -180,12 +170,12 @@ class _ProductPageState extends State<ProductPage> {
                                                 },
                                                 child: Image.asset(
                                                   'assets/heart.png',
-                                                  width: 30,
-                                                  height: 30,
+                                                  width: 25,
+                                                  height: 25,
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              const SizedBox(width: 10),
+                                              const SizedBox(width: 7),
                                               GestureDetector(
                                                 onTap: () {
                                                   Get.to(
@@ -193,8 +183,8 @@ class _ProductPageState extends State<ProductPage> {
                                                 },
                                                 child: Image.asset(
                                                   'assets/cart.png',
-                                                  width: 30,
-                                                  height: 30,
+                                                  width: 25,
+                                                  height: 25,
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
