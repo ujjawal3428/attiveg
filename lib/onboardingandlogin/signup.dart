@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:homepage/homepage.dart';
 import 'package:homepage/onboardingandlogin/emaillogin.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -32,11 +33,11 @@ class SignupState extends State<Signup> {
     }
 
     final String url =
-        "https://example.com/api/register"; // Replace with your API endpoint
+        "https://attiveg.com:8443/api/register"; // Replace with your API endpoint
     final Map<String, String> payload = {
       "fullName": fullNameController.text,
-      "email": emailController.text,
-      "number": numberController.text,
+      "username": emailController.text,
+      "phone": numberController.text,
       "password": passwordController.text,
     };
 
@@ -49,7 +50,7 @@ class SignupState extends State<Signup> {
 
       if (response.statusCode == 200) {
         // Success: Navigate to HomePage
-        Get.offAll(() => const HomePage());
+        await loginUser();
       } else {
         // Failure: Show error message
         final error =
@@ -58,6 +59,48 @@ class SignupState extends State<Signup> {
       }
     } catch (e) {
       _showErrorDialog('An error occurred. Please try again.');
+    }
+  }
+
+  Future<void> loginUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String apiUrl =
+        "https://attiveg.com:8443/api/login/password"; // Replace with your API endpoint
+    final String username = emailController.text;
+    final String password = passwordController.text;
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({
+          "username": username,
+          "password": password,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+        prefs.setString('token', responseBody['token']);
+        print(responseBody['token']);
+        Get.offAll(() => const HomePage());
+        Get.snackbar('Registration Successful!', '');
+      } else {
+        // Handle error response
+        Get.snackbar(
+          "Login Failed",
+          "Invalid credentials or server error.",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "An error occurred: $e",
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
@@ -103,6 +146,7 @@ class SignupState extends State<Signup> {
               ),
             ),
             SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Padding(
                 padding: EdgeInsets.only(
                   top: size.height * 0.17,

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:homepage/bottomnavigator.dart';
 import 'package:homepage/helpandfaqs.dart';
 import 'package:homepage/homepage.dart';
 import 'package:homepage/logout.dart';
-
 import 'package:homepage/manageaddress.dart';
 import 'package:homepage/myorder.dart';
 import 'package:homepage/navigation/categories.dart';
 import 'package:homepage/navigation/offer.dart';
 import 'package:homepage/navigation/profileinfo.dart';
 import 'package:homepage/navigation/switchstores.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -20,6 +22,59 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String? _responseMessage = "No response yet!";
+  String? _token;
+  String username = 'Username not available';
+  String phone = 'Phone number not available';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _token = prefs.getString('token');
+    });
+    const String url =
+        'https://attiveg.com:8443/api/users/current'; // Replace with your API URL
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $_token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Successful response
+        final data = json.decode(response.body);
+        setState(() {
+          username = data['username'] ?? 'Username not available';
+          phone = data['phone'] ?? 'Phone number not available';
+        });
+        setState(() {
+          _responseMessage = 'Success!';
+        });
+      } else {
+        // Error response
+        setState(() {
+          _responseMessage = 'Error: ${response.statusCode} - ${response.body}';
+        });
+        Get.snackbar(_responseMessage!, '');
+      }
+    } catch (error) {
+      setState(() {
+        _responseMessage = 'Failed to connect: $error';
+      });
+      Get.snackbar(_responseMessage!, '');
+    }
+  }
+
   int _selectedIndex = 4;
 
   void _onItemTapped(int index) {
@@ -163,14 +218,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 30,
                       ),
                       SizedBox(width: 10),
-                      Text('test@gmail.com'),
+                      Text(username),
                     ],
                   ),
                 ),
                 SizedBox(height: 10),
                 // Phone Container
                 Container(
-                  height: 40,
+                  height: 39,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -184,7 +239,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 25,
                       ),
                       SizedBox(width: 10),
-                      Text('+91 890-456-7890'),
+                      Text(phone),
                     ],
                   ),
                 ),
